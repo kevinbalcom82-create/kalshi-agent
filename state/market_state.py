@@ -41,9 +41,9 @@ class MarketState:
         with self._lock:
             return {
                 "ticker": self.ticker,
-                "yes_bid": float(self.yes_bid),
-                "yes_ask": float(self.yes_ask),
-                "price": float(self.price),
+                "yes_bid": str(self.yes_bid),
+                "yes_ask": str(self.yes_ask),
+                "price": str(self.price),
                 "last_update": self.last_update.isoformat()
             }
 

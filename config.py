@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    BANKROLL = float(os.getenv("BANKROLL", 25.00))
+    BANKROLL = Decimal(str(os.getenv("BANKROLL", "25.00")))
     HEARTBEAT_INTERVAL_SECONDS = 3600 
 
     REST_BASE_URL = "https://external-api.kalshi.com"

@@ -89,7 +89,7 @@ class BaseStrategy(ABC):
                 logger.log_event("INFO", "NO_EDGE", self.name, "Kelly returned 0 contracts.")
                 return
 
-            position = Decimal(str(kelly.get("position_dollars", "0")))
+            position = Decimal(str(kelly.get("capital_at_risk", kelly.get("position_dollars", "0"))))
             if not reserve_fn(position):
                 logger.log_event("WARNING", "CAPITAL_CAP", self.name, "Allocation cap reached — skipped.")
                 return
