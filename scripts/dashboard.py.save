@@ -1,0 +1,132 @@
+alshi Agent v2.4 — Live Telemetry Command Center
+Reads the SQLite database and visualizes Agent performance,
+Win Rate, Paper PnL, and DeepSeek confidence metrics.
+"""
+
+import streamlit as st
+import sqlite3
+import pandas as pd
+import plotly.express as px
+from datetime import datetime
+
+# Configure the page
+st.set_page_config(page_title="Kalshi Agent Telemetry", page_icon="⚡", layout="wide")
+
+DB_PATH = "/Volumes/AI_Drive/kalshi_data/market_state.db"
+
+# ─── Data Loading ────────────────────────────────────────────────────────────
+@st.cache_data(ttl=60) # Refreshes every 60 seconds automatically
+def load_data():
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        # Load the signals table
+        df = pd.read_sql_query("SELECT * FROM signals ORDER BY timestamp DESC", conn)
+        conn.close()
+        
+        if df.empty:
+            return pd.DataFrame()
+
+        # Format columns
+        df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+        df['entry_price'] = pd.to_numeric(df['entry_price'], errors='coerce')
+        df['confidence'] = pd.to_numeric(df['confidence'], errors='coerce')
+        df['settled_value'] = pd.to_numeric(df['settled_value'], errors='coerce')
+        
+        # Calculate Paper PnL (Assuming a standard 100-contract position)
+        # If WIN: Profit = (Settled - Entry) * 100
+        # If LOSS: Loss = (Settled - Entry) * 100
+        def calc_pnl(row):
+            if pd.isna(row['outcome']) or row['outcome'] == '':
+                return 0.0
+            return (row['settled_value'] - row['entry_price']) * 100
+
+        df['paper_pnl'] = df.apply(calc_pnl, axis=1)
+        return df
+
+    except Exception as e:
+        st.error(f"Failed to load database: {e}")
+        return pd.DataFrame()
+
+# ─── UI Layout ───────────────────────────────────────────────────────────────
+st.title("⚡ Kalshi Agent — Live Command Center")
+st.markdown("Real-time telemetry and paper-trading performance powered by DeepSeek-R1.")
+
+df = load_data()
+
+if df.empty:
+    st.warning("No signals found in the database yet. Let the Agent run!")
+    st.stop()
+
+# ─── Key Metrics ─────────────────────────────────────────────────────────────
+st.markdown("### 📊 Overall Performance (Paper Trading)")
+
+graded_df = df[df['outcome'].isin(['WIN', 'LOSS'])]
+
+total_signals = len(df)
+graded_signals = len(graded_df)
+wins = len(graded_df[graded_df['outcome'] == 'WIN'])
+win_rate = (wins / graded_signals * 100) if graded_signals > 0 else 0
+total_pnl = graded_df['paper_pnl'].sum() if graded_signals > 0 else 0
+avg_conf = df['confidence'].mean()
+
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Total Signals", total_signals)
+col2.metric("Win Rate", f"{win_rate:.1f}%", f"{graded_signals} Graded")
+col3.metric("Paper PnL (100-lot)", f"${total_pnl:.2f}", "Cumulative")
+col4.metric("Avg Confidence", f"{avg_conf:.1f}%")
+
+st.divider()
+
+# ─── Charts ──────────────────────────────────────────────────────────────────
+col_chart1, col_chart2 = st.columns(2)
+
+with col_chart1:
+    st.markdown("#### Confidence vs. Outcome")
+    if not graded_df.empty:
+        fig1 = px.scatter(
+            graded_df, 
+            x="timestamp", 
+            y="confidence", 
+            color="outcome",
+            color_discrete_map={"WIN": "#00CC96", "LOSS": "#EF553B"},
+            hover_data=["ticker", "entry_price", "paper_pnl"],
+            title="Model Conviction Accuracy"
+        )
+        st.plotly_chart(fig1, use_container_width=True)
+    else:
+        st.info("Grade some signals using the Backfill CLI to see this chart.")
+
+with col_chart2:
+    st.markdown("#### Edge Source Distribution")
+    fig2 = px.pie(
+        df, 
+        names="edge_source", 
+        title="Where is DeepSeek finding Alpha?",
+        hole=0.4
+    )
+    st.plotly_chart(fig2, use_container_width=True)
+
+st.divider()
+
+# ─── Raw Data Feed ───────────────────────────────────────────────────────────
+st.markdown("### 📡 Live Signal Feed")
+st.dataframe(
+    df[['timestamp', 'ticker', 'signal', 'confidence', 'entry_price', 'edge_source', 'outcome', 'paper_pnl', 'reasoning']],
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "timestamp": st.column_config.DatetimeColumn("Date/Time", format="MMM DD, HH:mm"),
+        "confidence": st.column_config.ProgressColumn("Confidence", format="%d%%", min_value=0, max_value=100),
+        "paper_pnl": st.column_config.NumberColumn("PnL ($)", format="$%.2f"),
+        "entry_price": st.column_config.NumberColumn("Entry", format="$%.2f")
+    }
+)
+
+# Sidebar controls
+with st.sidebar:
+    st.markdown("### ⚙️ Engine Status")
+    st.success("Database Connected")
+    st.info(f"Target DB: {DB_PATH}")
+    if st.button("🔄 Force Refresh Data"):
+        load_data.clear()
+        st.rerun()

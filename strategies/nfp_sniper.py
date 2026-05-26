@@ -22,4 +22,8 @@ class NFPSniper(BaseStrategy):
 
     def build_context(self) -> dict:
         from state.context_builder import build_context
-        return build_context(ticker=self.ticker_prefix)
+        
+        ctx = build_context(ticker=self.ticker_prefix)
+        ctx["strategy_name"] = self.name
+        
+        return ctx

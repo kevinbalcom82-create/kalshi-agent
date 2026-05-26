@@ -116,8 +116,12 @@ class SportsSniperEdge(BaseStrategy):
             f"Entry price must be quoted string 0.01-0.99."
         )
 
-        return {
+        ctx = {
             "prompt": prompt,
             "game_data": game_data,
             "ticker": self.ticker_prefix
         }
+        
+        ctx["strategy_name"] = self.name
+        
+        return ctx

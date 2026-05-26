@@ -56,6 +56,7 @@ class BaseStrategy(ABC):
     def execute(self, execution_lock: threading.Lock, reserve_fn, release_fn):
         from engine.kelly_sizer import calculate_kelly
         from engine.kalshi_router import execute_trade
+        from engine.kalshi_ticker_resolver import resolve_kalshi_ticker, invalidate_cache
         from data.kalshi_market import get_market_price
         from output.agent_logger import logger
         from output.telegram_notifier import send_telegram
@@ -73,8 +74,15 @@ class BaseStrategy(ABC):
             return
 
         try:
-            fresh_price = Decimal(str(get_market_price(self.ticker_prefix)))
-            cached_price = Decimal(str(signal.get("suggested_entry_dollars", "0")))
+            exact_ticker, fresh_price = resolve_kalshi_ticker(self.ticker_prefix)
+            cached_price_raw = signal.get("suggested_entry_dollars")
+            
+            # THE DRIFT FIX: If AI gives no price, use the fresh market price
+            if not cached_price_raw or str(cached_price_raw) in ("0", "0.0", ""):
+                cached_price = fresh_price
+            else:
+                cached_price = Decimal(str(cached_price_raw))
+                
             drift = abs(fresh_price - cached_price)
 
             if drift > Decimal("0.05"):
@@ -97,7 +105,8 @@ class BaseStrategy(ABC):
             kelly["side"] = signal["direction"]
 
             try:
-                result = execute_trade(kelly, self.ticker_prefix)
+                result = execute_trade(kelly, exact_ticker)
+                invalidate_cache(self.ticker_prefix)
                 logger.log_event("INFO", "ORDER_SENT", self.name, f"order_id={result.get('order_id')} status={result.get('status')}")
                 send_telegram(f"✅ *{self.name} STRIKE*\nSide: {kelly['side']}\nContracts: {kelly['contracts']}\nEntry: ${fresh_price}")
             except Exception as e:

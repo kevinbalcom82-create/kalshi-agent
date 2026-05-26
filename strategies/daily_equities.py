@@ -127,6 +127,7 @@ class DailyEquitiesHunter(BaseStrategy):
 
         return {
             "ticker":        self.ticker_prefix,
+            "strategy_name": self.name,
             "prompt":        "\n\n".join(prompt_sections),
             "mom_direction": "UP" if "UP" in spx_trend else "DOWN",
             "spx":           spx,

@@ -1,29 +1,70 @@
-from decimal import Decimal
 import os
-from dotenv import load_dotenv
+from decimal import Decimal
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-load_dotenv()
 
-class Config:
-    BANKROLL = Decimal(str(os.getenv("BANKROLL", "25.00")))
-    HEARTBEAT_INTERVAL_SECONDS = 3600 
+class AgentConfig(BaseSettings):
+    """
+    Centralized configuration for the Suncoast Agent Factory.
+    Validates all required environment variables on startup.
+    Fails immediately with a clear error if critical keys are missing.
+    """
 
-    REST_BASE_URL = "https://external-api.kalshi.com"
-    TARGET_TICKER = os.getenv("TARGET_TICKER", "CPI")
-    PAPER_TRADING = os.getenv("PAPER_TRADING", "true").lower() == "true"
+    # ── Trading Execution ─────────────────────────────────────────────────────
+    KALSHI_API_KEY:           str
+    KALSHI_PRIVATE_KEY_PATH:  str          = Field(default="./secrets/kalshi.pem")
+    POLYMARKET_PRIVATE_KEY:   str | None   = None
+    POLYMARKET_PROXY_WALLET:  str | None   = None
 
-    KALSHI_API_KEY = os.getenv("KALSHI_API_KEY")
-    KALSHI_PRIVATE_KEY_PATH = os.getenv("KALSHI_PRIVATE_KEY_PATH")
-    FRED_API_KEY = os.getenv("FRED_API_KEY")
-    BLS_API_KEY = os.getenv("BLS_API_KEY")
-    DB_PATH = "/Volumes/AI_Drive/kalshi_data/market_state.db"
-    
-    # 🚨 Telegram Credentials (Aliased for backward compatibility!)
-    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-    TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN") 
-    TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+    # ── Market Data Providers ─────────────────────────────────────────────────
+    FRED_API_KEY:             str | None   = None
+    BLS_API_KEY:              str | None   = None
+    NOAA_TOKEN:               str | None   = None
+    POLYGON_API_KEY:          str | None   = None
+    ODDS_API_KEY:             str | None   = None
 
-    def to_decimal(self, val):
+    # ── Alerts & Monitoring ───────────────────────────────────────────────────
+    TELEGRAM_BOT_TOKEN:       str
+    TELEGRAM_CHAT_ID:         str
+
+    # ── Infrastructure ────────────────────────────────────────────────────────
+    REST_BASE_URL:            str          = Field(default="https://external-api.kalshi.com")
+    POLYGON_RPC_URL:          str          = Field(default="https://polygon-rpc.com")
+    DB_PATH:                  str          = Field(default="/Volumes/AI_Drive/kalshi_data/market_state.db")
+    HEARTBEAT_INTERVAL_SECONDS: int        = Field(default=3600)
+
+    # ── Financial Settings ────────────────────────────────────────────────────
+    BANKROLL:                 Decimal      = Field(default=Decimal("25.00"))
+    PAPER_TRADING:            bool         = Field(default=True)
+    TARGET_TICKER:            str          = Field(default="CPI")
+
+    # ── Strategy Toggles ──────────────────────────────────────────────────────
+    CPI_ACTIVE_TODAY:         bool         = Field(default=False)
+    FOMC_ACTIVE:              bool         = Field(default=False)
+    FOMC_TICKER:              str          = Field(default="KXFED")
+    EQUITIES_ACTIVE:          bool         = Field(default=True)
+    SPORTS_ACTIVE:            bool         = Field(default=False)
+    SPORTS_TICKER:            str          = Field(default="KXNBA")
+    CRYPTO_ACTIVE:            bool         = Field(default=False)
+    CRYPTO_TICKER:            str          = Field(default="KXBTC-PLACEHOLDER")
+
+    # ── Backward compatibility aliases ────────────────────────────────────────
+    @property
+    def TELEGRAM_TOKEN(self) -> str:
+        """Alias — some files use TELEGRAM_TOKEN, others TELEGRAM_BOT_TOKEN."""
+        return self.TELEGRAM_BOT_TOKEN
+
+    def to_decimal(self, val) -> Decimal:
+        """Utility used throughout codebase for safe Decimal conversion."""
         return Decimal(str(val))
 
-cfg = Config()
+    model_config = SettingsConfigDict(
+        env_file          = ".env",
+        env_file_encoding = "utf-8",
+        extra             = "ignore",   # Ignore unknown env vars safely
+    )
+
+
+# Global singleton — raises ValidationError at boot if critical keys missing
+cfg = AgentConfig()

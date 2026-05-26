@@ -41,7 +41,6 @@ class TelegramCommander:
         url = f"https://api.telegram.org/bot{cfg.TELEGRAM_BOT_TOKEN}/getUpdates"
         while True:
             try:
-                # 5s timeout on the request, +1 on offset to acknowledge messages
                 resp = requests.get(url, params={"offset": self.last_update_id + 1, "timeout": 5}, timeout=10)
                 if resp.status_code == 200:
                     data = resp.json()
@@ -51,7 +50,6 @@ class TelegramCommander:
                         text = msg.get("text", "").strip().lower()
                         chat_id = str(msg.get("chat", {}).get("id", ""))
                         
-                        # SECURITY: Only accept commands from your personal Chat ID
                         if chat_id != str(cfg.TELEGRAM_CHAT_ID):
                             continue
                         
@@ -67,8 +65,26 @@ class TelegramCommander:
                             self._send_message(self._get_status())
                         elif text == "/kelly":
                             self._send_message(f"💰 *Kelly Params*\nBankroll: ${cfg.BANKROLL}\nFormula: 1/4 Kelly\nMax Cap: 15%\nTarget: `{cfg.TARGET_TICKER}`")
+                        elif text == "/pnl":
+                            try:
+                                with sqlite3.connect(cfg.DB_PATH, timeout=5) as conn:
+                                    cursor = conn.execute("SELECT sum(net_spread), count(*) FROM arb_spreads WHERE executed = 1 AND timestamp >= datetime('now', '-1 day')")
+                                    data_row = cursor.fetchone()
+                                    total_profit = data_row[0] if data_row and data_row[0] else 0.00
+                                    total_trades = data_row[1] if data_row and data_row[1] else 0
+                                    self._send_message(f"📈 *Daily Alpha Report*\n\n💰 Net Profit: ${total_profit:.2f}\n🎯 Executed Trades: {total_trades}\n🤖 System Status: Nominal")
+                            except Exception as e:
+                                self._send_message(f"❌ Database error: {e}")
+                        elif text in ["/panic", "/halt"]:
+                            try:
+                                self.pause_event.set() # Physically halts the engine!
+                                with sqlite3.connect(cfg.DB_PATH, timeout=5) as conn:
+                                    conn.execute("INSERT INTO system_logs (level, event_type, strategy, message) VALUES ('CRITICAL', 'PANIC_HALT', 'SYSTEM', 'User triggered /panic from Telegram. Engine locking down.')")
+                                self._send_message("🛑 *ENGINE HALTED.*\nAll new executions have been suspended. Background loops are standing by for manual override.")
+                                logger.log_event("CRITICAL", "REMOTE_COMMAND", "SYSTEM", "Engine halted via /panic.")
+                            except Exception as e:
+                                self._send_message(f"❌ Database error: {e}")
             except Exception:
-                # Swallow exceptions (network drops, API timeouts) so the daemon thread never crashes
                 pass
             
             time.sleep(5)

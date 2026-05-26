@@ -52,8 +52,12 @@ class FOMCWatcher(BaseStrategy):
             "'edge_source' (YIELD/TONE/MIXED), and 'reasoning' (2-3 sentences citing exact values)."
         )
 
-        return {
+        ctx = {
             "ticker": ticker,
             "prompt": prompt,
             "fed_data": fed_data
         }
+        
+        ctx["strategy_name"] = self.name
+        
+        return ctx

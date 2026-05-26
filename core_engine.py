@@ -12,6 +12,8 @@ from decimal import Decimal
 from config import cfg
 from output.agent_logger import logger
 from engine.bot_commander import start_commander
+from engine.arb_scanner import start_arb_scanner
+from engine.self_improver import start_nightly_auditor
 
 # THE PAUSE FLAG (Thread-Safe)
 SYSTEM_PAUSED = threading.Event()
@@ -98,8 +100,14 @@ def start_scheduler():
     # Boot the 2-Way Telegram Listener
     start_commander(SYSTEM_PAUSED)
     
+    # Boot the Nightly Auditor (Self-Improvement Loop)
+    start_nightly_auditor()
+    
     for s in strategies:
         register_strategy(s)
+
+    if not getattr(cfg, "PAPER_TRADING", True):
+        start_arb_scanner([s.ticker_prefix for s in strategies], reserve_capital, release_capital)
         
     print(f"[*] Awaiting Schedule Triggers for {len(strategies)} active strategies...")
     while True:

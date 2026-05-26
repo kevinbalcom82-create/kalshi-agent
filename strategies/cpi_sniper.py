@@ -1,6 +1,7 @@
 from strategies.base_strategy import BaseStrategy
 from config import cfg
 import os
+import datetime
 
 class CPISniper(BaseStrategy):
     @property
@@ -33,6 +34,7 @@ class CPISniper(BaseStrategy):
         from data.truflation_client import inflation_oracle
         
         ctx = build_context(ticker=self.ticker_prefix)
+        ctx["strategy_name"] = self.name
         
         try:
             oracle_data = inflation_oracle.get_us_inflation()

@@ -10,6 +10,7 @@ class AgentLogger:
         self._lock = threading.Lock()
         self._conn = sqlite3.connect(self.db_path, check_same_thread=False, timeout=30)
         self._init_db()
+        self._init_arb_table()
 
     def _init_db(self):
         with self._lock:
@@ -61,6 +62,16 @@ class AgentLogger:
                 )
             """)
             self._conn.commit()
+
+
+    def _init_arb_table(self):
+        with __import__('sqlite3').connect(self.db_path, timeout=30) as conn:
+            conn.execute("CREATE TABLE IF NOT EXISTS arb_spreads (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, kalshi_ticker TEXT, poly_token TEXT, kalshi_ask TEXT, poly_bid TEXT, gross_spread TEXT, net_spread TEXT, is_profitable INTEGER, executed INTEGER DEFAULT 0)")
+    def log_arb_spread(self, kalshi_ticker, poly_token, kalshi_ask, poly_bid, gross_spread, net_spread, is_profitable, executed=False):
+        try:
+            with __import__('sqlite3').connect(self.db_path, timeout=5) as conn:
+                conn.execute("INSERT INTO arb_spreads (kalshi_ticker, poly_token, kalshi_ask, poly_bid, gross_spread, net_spread, is_profitable, executed) VALUES (?,?,?,?,?,?,?,?)", (kalshi_ticker, poly_token, str(kalshi_ask), str(poly_bid), str(gross_spread), str(net_spread), int(is_profitable), int(executed)))
+        except Exception: pass
 
     def log_event(self, level, event_type, ticker, message, reasoning=None):
         timestamp = datetime.datetime.now().isoformat()
