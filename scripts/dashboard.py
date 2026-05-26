@@ -212,3 +212,30 @@ with tab5:
             st.info("No strategies registered yet. Reboot the core engine to populate the schedule.")
     except Exception as e:
         st.error(f"Error loading schedule: {e}")
+
+
+# --- GHOST BOOK INJECTION ---
+import pandas as pd
+import sqlite3
+import os
+import streamlit as st
+
+st.markdown('---')
+st.subheader('👻 Ghost Book (Paper Trading Ledger)')
+
+try:
+    db_path = os.path.expanduser('~/kalshi_agent/output/ghost_book.db')
+    conn = sqlite3.connect(db_path)
+    df_paper = pd.read_sql_query(
+        'SELECT timestamp, ticker, signal, confidence, outcome, simulated_entry_price, reasoning FROM paper_trades ORDER BY timestamp DESC LIMIT 50',
+        conn
+    )
+    conn.close()
+
+    if not df_paper.empty:
+        st.dataframe(df_paper, use_container_width=True)
+    else:
+        st.info('The Ghost Book is currently empty. The engine is idling and waiting for setups.')
+
+except Exception as e:
+    st.error(f'Could not load Ghost Book data: {e}')

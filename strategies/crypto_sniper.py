@@ -2,6 +2,9 @@ import os
 import logging
 from strategies.base_strategy import BaseStrategy
 from engine.cro_auditor import audit_signal
+from data.alpha_clients.moa_debate import moa_brain
+from data.alpha_clients.binance_client import binance_client
+from data.alpha_clients.kalshi_orderbook import kalshi_ob_client
 
 logger = logging.getLogger("CRYPTO_SNIPER")
 

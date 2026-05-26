@@ -1,0 +1,1859 @@
+
+============================================================
+🧠 HERMES RAW COGNITION | 2026-05-24 11:02:28 | KXNBA
+STRATEGY: SPORTS_SNIPER
+------------------------------------------------------------
+📥 INJECTED CONTEXT & DATA:
+TARGET TICKER: KXNBA
+CONTEXT & RULES:
+## LIVE INTERNET SEARCH RESULTS:
+1. HoopsHype: NBA News, Rumors & Rankings
+   Context: Get the latest NBA news, trade rumors, rankings, salaries, and player updates on HoopsHype.
+2. NBA News, Scores, Stats, Standings and Rumors - CBS Sports
+   Context: CBS Sports has the latest NBA news, live scores, player stats, standings, fantasy games and projections on the National Basketball Association.
+
+
+## HISTORICAL MEMORY (Similar Past Setups)
+
+Study these past setups carefully. Avoid repeating strategies that led to LOSS outcomes.
+
+Memory 1 (85.0% similar) ⏳ PENDING
+  Context: Strategy: KXNBA | Signal: BUY_YES | Confidence: 70% | Edge Source: SERIES | Risk Flag: MEDIUM | Reasoning: The Knicks have a slight edge based on their 2-1 series win, despite both teams having identi
+  Settled:  | Confidence was: 70% | Edge: SERIES
+
+
+You are a quantitative sports betting AI. Analyze the following NBA game and provide a trading signal.
+
+--- GAME DATA ---
+Home Team: Cleveland Cavaliers (Home Rec: 0-0, Overall: None, L5: 0-0)
+Away Team: New York Knicks (Away Rec: 0-0, Overall: None, L5: 0-0)
+Home Implied Win Prob: 0.48 (Decimal Odds: 2.08)
+Away Implied Win Prob: 0.57 (Decimal Odds: 1.76)
+Elimination Game: False
+Series Summary: NY wins series 2-1
+Key Injuries: False - 
+Data Quality: FULL
+
+--- SIGNAL MAPPING ---
+BUY_YES = Cleveland Cavaliers wins (Home Team)
+BUY_NO = New York Knicks wins (Away Team)
+WATCH = No edge or injury uncertainty
+
+--- CONFIDENCE ANCHORS ---
+90-100: Elimination game AND clear record advantage
+75-89: Clear favorite AND records support
+65-74: Slight edge, some uncertainty
+Below 65: Output WATCH
+
+--- EDGE SOURCES ---
+Weigh ODDS, RECORDS, INJURIES, HOME_ADVANTAGE, and SERIES context.
+
+--- ENTRY PRICE RULES ---
+If BUY_YES: Use '0.48' as suggested_entry_dollars.
+If BUY_NO: Use '0.57' as suggested_entry_dollars.
+Value must be a string between '0.01' and '0.85'.
+
+--- REQUIRED OUTPUT ---
+Respond ONLY with valid JSON:
+{
+  "signal": "BUY_YES" or "BUY_NO" or "WATCH",
+  "confidence": integer 0-100,
+  "suggested_entry_dollars": "0.XX",
+  "risk_flag": "LOW" or "MEDIUM" or "HIGH",
+  "edge_source": "ODDS" or "RECORDS" or "INJURIES" or "HOME_ADVANTAGE" or "SERIES",
+  "reasoning": "2-3 sentences citing specific values"
+}
+Entry price must be quoted string 0.01-0.99.
+------------------------------------------------------------
+📤 AI INTERNAL MONOLOGUE (<think>):
+First, I'm the CRO of a delta-neutral fund with strict capital preservation. I must be extremely skeptical and default to WATCH unless there's strong evidence. Historical memory is key: if a similar setup caused a loss, I must output WATCH.
+
+The historical memory shows one pending item, but it's not settled yet. Memory 1 is pending, with a signal of BUY_YES for Knicks (since they won the series), confidence 70%, edge source SERIES, risk flag MEDIUM. But it's pending, so I don't have a settled outcome to reference for loss. The instruction says: "If historical memory shows a similar setup resulted in LOSS, you must output WATCH regardless of current signals." Since this memory is pending, I don't know if it resulted in a loss or not. I should assume that pending memories aren't conclusive, so I can't force WATCH based on this alone.
+
+Now, analyze the current game:
+
+- Home Team: Cleveland Cavaliers, implied win prob 0.48 (Decimal Odds: 2.08)
+
+- Away Team: New York Knicks, implied win prob 0.57 (Decimal Odds: 1.76)
+
+- Elimination Game: False
+
+- Series Summary: NY wins series 2-1 (so Knicks won the series 2-1)
+
+- Key Injuries: False
+
+- Data Quality: FULL
+
+SIGNAL MAPPING:
+
+- BUY_YES: Cavaliers win
+
+- BUY_NO: Knicks win
+
+- WATCH: No edge
+
+CONFIDENCE ANCHORS:
+
+- 90-100: Elimination game AND clear record advantage
+
+- 75-89: Clear favorite AND records support
+
+- 65-74: Slight edge, some uncertainty
+
+- Below 65: WATCH
+
+EDGE SOURCES: ODDS, RECORDS, INJURIES, HOME_ADVANTAGE, SERIES
+
+From the series summary, Knicks won the series 2-1, so they have a slight edge in this series context.
+
+Implied win probabilities: Knicks have 0.57, Cavs have 0.48. So Knicks are favored.
+
+Decimal odds: Knicks 1.76, Cavs 2.08. Lower odds mean better value for the favorite.
+
+Edge sources:
+
+- ODDS: Knicks have lower odds (1.76 vs 2.08), so slight edge.
+
+- RECORDS: Not much data given; both teams have no recent record or L5 data provided beyond the series win. Series summary says NY wins series 2-1, but that's the away team.
+
+- INJURIES: False, no injuries.
+
+- HOME_ADVANTAGE: Home team is Cavs, implied win prob 0.48, away is 0.57, so home advantage might not be strong here.
+
+- SERIES: Knicks won the series, so they have a series advantage.
+
+Confidence must be calibrated:
+
+- Is there a clear favorite? Knicks implied win prob 0.57 > 0.5, so slight favorite.
+
+- Records: Not much data. Both have 0-0 for the game, but series context is given.
+
+- Elimination game: False, so not a high-stakes game.
+
+Confidence anchors:
+
+- Below 75 for WATCH if not clear edge.
+
+- 65-74: Slight edge, some uncertainty.
+
+Here, Knicks are slight favorite with 0.57 implied win prob. Cavs have 0.48.
+
+Edge source: SERIES (Knicks won series) and ODDS (lower odds for Knicks).
+
+Confidence: Since it's a slight edge, and not a clear favorite (because 0.57 is only slightly above 0.5), it might fall into 65-74 or below.
+
+Implied win prob 0.57 suggests about 57% chance, which is slight edge.
+
+But confidence is based on data strength.
+
+Data quality is FULL, so good.
+
+Historical memory: The pending memory has similar setup (series context), but it's pending, so I don't know outcome. But the signal was BUY_YES for Knicks, and they won, but it's not settled. I should be cautious.
+
+My default is WATCH, so I need strong evidence.
+
+Is there a loss in historical memory? The pending one might have been a loss, but it's not specified. I should only WATCH if a loss occurred.
+
+The instruction says: "If historical memory shows a similar setup resulted in LOSS, you must output WATCH"
+
+In this case, the setup is similar: a series where Knicks won 2-1, and now a game in that series.
+
+But I don't know the outcome of that historical setup. It's pending.
+
+To be safe, since it's pending, I can't assume loss. But I must be skeptical.
+
+Confidence calibration:
+
+- 90-100: Elimination game AND clear record advantage – not elimination, no clear record advantage.
+
+- 75-89: Clear favorite AND records support – Knicks are slight favorite, no strong records.
+
+- 65-74: Slight edge, some uncertainty – fits here.
+
+- Below 65: WATCH
+
+I think confidence should be around 65-74 for slight edge.
+
+But I must use 90+ only with extreme alignment, etc.
+
+Also, edge source: likely SERIES or ODDS.
+
+Now, signal: Should I BUY_YES or BUY_NO or WATCH?
+
+BUY_YES is Cavs winning, BUY_NO is Knicks winning.
+
+Given Knicks have higher implied win prob and won the series, slight edge for Knicks.
+
+But I must be skeptical.
+
+Entry price: If BUY_YES, use 0.48, if BUY_NO, use 0.57.
+
+Suggested_entry_dollars must be a string between 0.01 and 0.85, but in the context, it's given as '0.48' or '0.57', which is within range.
+
+Risk flag: LOW, MEDIUM, HIGH. Based on confidence or edge.
+
+Confidence 75-89 is clear edge, risk low; 65-74 uncertainty, medium; below 65 WATCH, high risk or something.
+
+Confidence anchors don't specify risk flag directly.
+
+I need to output risk flag.
+
+From anchors:
+
+- High confidence (90+) might be low risk.
+
+- Medium confidence (75-89) clear edge, probably low risk.
+
+- Lower confidence higher risk.
+
+But as CRO, I must preserve capital, so even with edge, be cautious.
+
+Historical memory: The pending memory was BUY_YES with 70% confidence, and Knicks won, but it's pending.
+
+I should output WATCH to be safe.
+
+But let's analyze the data.
+
+Implied win prob: Knicks 0.57, Cavs 0.48. So market suggests Knicks 57% chance.
+
+Series: Knicks won 2-1, so they have home-court advantage or something? Series was probably best-of-5 or more, but not specified. Typically NBA series, but not elimination game.
+
+Key injuries false.
+
+Data quality full.
+
+Slight edge for Knicks.
+
+Confidence: Since not elimination, and slight edge, confidence around 65-74.
+
+But must be extreme skepticism.
+
+My default is WATCH, and only if strong evidence.
+
+Here, slight edge, but historical memory pending might indicate caution.
+
+I think I should go with WATCH.
+
+But let's see the reasoning.
+
+Reasoning must be 2-3 sentences citing specific values.
+
+Edge source: probably SERIES.
+
+Now, for confidence: if I output WATCH, confidence below 65, say 50.
+
+But confidence must reflect data strength.
+
+Perhaps output BUY_NO with confidence 65-74.
+
+But I must be strict.
+
+Another thing: the signal mapping, BUY_YES and BUY_NO are for the game outcome, not the series.
+
+In the historical memory, it was BUY_YES for Knicks winning the series, but now it's a single game.
+
+Similar setup.
+
+But I don't know the outcome.
+
+To err on the side of caution, WATCH.
+
+Let me check the confidence anchors again.
+
+Confidence 75-89 for clear favorite and records support.
+
+Is Knicks clear favorite? Implied win prob 0.57, which is not overwhelmingly clear; typically clear favorite might be above 0.6 or something.
+
+In sports betting, odds around 1.76 suggest about 57% implied probability, which is not a strong favorite.
+
+Cavs at 2.08 is about 48%, underdog.
+
+So slight edge.
+
+But for delta-neutral fund, preserve capital, so WATCH.
+
+Historical memory: The pending one was similar and resulted in loss? Not specified.
+
+I think I should output WATCH.
+
+Confidence below 65, say 60 or something.
+
+But confidence must be integer 0-100.
+
+Edge source: since WATCH, edge_source might not matter, but I need to output it.
+
+In WATCH, no edge, so perhaps edge_source is not applicable, but I have to choose one or leave it.
+
+The output requires edge_source to be one of the options.
+
+In reasoning, I can say no edge.
+
+But for WATCH, confidence below 65.
+
+Set confidence to 60, edge_source could be SERIES, but since WATCH, it's not strong.
+
+Perhaps set confidence to 50.
+
+But let's think.
+
+I am the CRO, strict preservation.
+
+Default WATCH.
+
+No strong evidence here.
+
+Implied win prob close, no injury, series context, but not decisive.
+
+So, output WATCH.
+
+Confidence: say 55, below 65.
+
+Risk flag: probably MEDIUM or HIGH, since some uncertainty.
+
+Confidence anchors don't specify risk flag, but I can infer.
+
+For WATCH, high risk.
+
+Now, reasoning: cite specific values, e.g., implied win probabilities close, no injury data, series context not decisive.
+
+Edge source: perhaps no edge, but I have to choose, say WATCH for SERIES or something.
+
+But for WATCH, edge_source might be irrelevant.
+
+I think I'll go with WATCH.
+
+Output:
+
+{
+  "signal": "WATCH",
+  "confidence": 55,  // below 65, say 55 to reflect uncertainty
+  "suggested_entry_dollars": "0.00",  // but the rule says use '0.48' or '0.57' for BUY/NO, but for WATCH, no entry, so perhaps '0.00' or something. The rule says "If BUY_YES: Use '0.48' as suggested_entry_dollars." but for WATCH, it's not specified. Probably use '0.00' or leave it, but must be a string between 0.01 and 0.85. The range is '0.01' to '0.85', so perhaps for WATCH, use a low value like '0.01' or '0.00', but 0.00 might not be allowed, min is 0.01. Or perhaps not specified, but to be safe, use '0.00' but it says between 0.01 and 0.85, so maybe '0.01' for no bet.
+
+The ENTRY PRICE RULES say: "If BUY_YES: Use '0.48' as suggested_entry_dollars." similarly for BUY_NO. For WATCH, not specified, but probably suggested_entry_dollars should be low or zero.
+
+But the range is '0.01' to '0.85', so perhaps use '0.01' for minimal bet or something.
+
+To be precise, I'll use '0.01' for WATCH, as it's a suggested entry but no edge.
+
+Risk flag: for WATCH, probably HIGH.
+
+Confidence: 55.
+📤 FINAL JSON OUTPUT:
+First, I'm the CRO of a delta-neutral fund with strict capital preservation. I must be extremely skeptical and default to WATCH unless there's strong evidence. Historical memory is key: if a similar setup caused a loss, I must output WATCH.
+
+The historical memory shows one pending item, but it's not settled yet. Memory 1 is pending, with a signal of BUY_YES for Knicks (since they won the series), confidence 70%, edge source SERIES, risk flag MEDIUM. But it's pending, so I don't have a settled outcome to reference for loss. The instruction says: "If historical memory shows a similar setup resulted in LOSS, you must output WATCH regardless of current signals." Since this memory is pending, I don't know if it resulted in a loss or not. I should assume that pending memories aren't conclusive, so I can't force WATCH based on this alone.
+
+Now, analyze the current game:
+
+- Home Team: Cleveland Cavaliers, implied win prob 0.48 (Decimal Odds: 2.08)
+
+- Away Team: New York Knicks, implied win prob 0.57 (Decimal Odds: 1.76)
+
+- Elimination Game: False
+
+- Series Summary: NY wins series 2-1 (so Knicks won the series 2-1)
+
+- Key Injuries: False
+
+- Data Quality: FULL
+
+SIGNAL MAPPING:
+
+- BUY_YES: Cavaliers win
+
+- BUY_NO: Knicks win
+
+- WATCH: No edge
+
+CONFIDENCE ANCHORS:
+
+- 90-100: Elimination game AND clear record advantage
+
+- 75-89: Clear favorite AND records support
+
+- 65-74: Slight edge, some uncertainty
+
+- Below 65: WATCH
+
+EDGE SOURCES: ODDS, RECORDS, INJURIES, HOME_ADVANTAGE, SERIES
+
+From the series summary, Knicks won the series 2-1, so they have a slight edge in this series context.
+
+Implied win probabilities: Knicks have 0.57, Cavs have 0.48. So Knicks are favored.
+
+Decimal odds: Knicks 1.76, Cavs 2.08. Lower odds mean better value for the favorite.
+
+Edge sources:
+
+- ODDS: Knicks have lower odds (1.76 vs 2.08), so slight edge.
+
+- RECORDS: Not much data given; both teams have no recent record or L5 data provided beyond the series win. Series summary says NY wins series 2-1, but that's the away team.
+
+- INJURIES: False, no injuries.
+
+- HOME_ADVANTAGE: Home team is Cavs, implied win prob 0.48, away is 0.57, so home advantage might not be strong here.
+
+- SERIES: Knicks won the series, so they have a series advantage.
+
+Confidence must be calibrated:
+
+- Is there a clear favorite? Knicks implied win prob 0.57 > 0.5, so slight favorite.
+
+- Records: Not much data. Both have 0-0 for the game, but series context is given.
+
+- Elimination game: False, so not a high-stakes game.
+
+Confidence anchors:
+
+- Below 75 for WATCH if not clear edge.
+
+- 65-74: Slight edge, some uncertainty.
+
+Here, Knicks are slight favorite with 0.57 implied win prob. Cavs have 0.48.
+
+Edge source: SERIES (Knicks won series) and ODDS (lower odds for Knicks).
+
+Confidence: Since it's a slight edge, and not a clear favorite (because 0.57 is only slightly above 0.5), it might fall into 65-74 or below.
+
+Implied win prob 0.57 suggests about 57% chance, which is slight edge.
+
+But confidence is based on data strength.
+
+Data quality is FULL, so good.
+
+Historical memory: The pending memory has similar setup (series context), but it's pending, so I don't know outcome. But the signal was BUY_YES for Knicks, and they won, but it's not settled. I should be cautious.
+
+My default is WATCH, so I need strong evidence.
+
+Is there a loss in historical memory? The pending one might have been a loss, but it's not specified. I should only WATCH if a loss occurred.
+
+The instruction says: "If historical memory shows a similar setup resulted in LOSS, you must output WATCH"
+
+In this case, the setup is similar: a series where Knicks won 2-1, and now a game in that series.
+
+But I don't know the outcome of that historical setup. It's pending.
+
+To be safe, since it's pending, I can't assume loss. But I must be skeptical.
+
+Confidence calibration:
+
+- 90-100: Elimination game AND clear record advantage – not elimination, no clear record advantage.
+
+- 75-89: Clear favorite AND records support – Knicks are slight favorite, no strong records.
+
+- 65-74: Slight edge, some uncertainty – fits here.
+
+- Below 65: WATCH
+
+I think confidence should be around 65-74 for slight edge.
+
+But I must use 90+ only with extreme alignment, etc.
+
+Also, edge source: likely SERIES or ODDS.
+
+Now, signal: Should I BUY_YES or BUY_NO or WATCH?
+
+BUY_YES is Cavs winning, BUY_NO is Knicks winning.
+
+Given Knicks have higher implied win prob and won the series, slight edge for Knicks.
+
+But I must be skeptical.
+
+Entry price: If BUY_YES, use 0.48, if BUY_NO, use 0.57.
+
+Suggested_entry_dollars must be a string between 0.01 and 0.85, but in the context, it's given as '0.48' or '0.57', which is within range.
+
+Risk flag: LOW, MEDIUM, HIGH. Based on confidence or edge.
+
+Confidence 75-89 is clear edge, risk low; 65-74 uncertainty, medium; below 65 WATCH, high risk or something.
+
+Confidence anchors don't specify risk flag directly.
+
+I need to output risk flag.
+
+From anchors:
+
+- High confidence (90+) might be low risk.
+
+- Medium confidence (75-89) clear edge, probably low risk.
+
+- Lower confidence higher risk.
+
+But as CRO, I must preserve capital, so even with edge, be cautious.
+
+Historical memory: The pending memory was BUY_YES with 70% confidence, and Knicks won, but it's pending.
+
+I should output WATCH to be safe.
+
+But let's analyze the data.
+
+Implied win prob: Knicks 0.57, Cavs 0.48. So market suggests Knicks 57% chance.
+
+Series: Knicks won 2-1, so they have home-court advantage or something? Series was probably best-of-5 or more, but not specified. Typically NBA series, but not elimination game.
+
+Key injuries false.
+
+Data quality full.
+
+Slight edge for Knicks.
+
+Confidence: Since not elimination, and slight edge, confidence around 65-74.
+
+But must be extreme skepticism.
+
+My default is WATCH, and only if strong evidence.
+
+Here, slight edge, but historical memory pending might indicate caution.
+
+I think I should go with WATCH.
+
+But let's see the reasoning.
+
+Reasoning must be 2-3 sentences citing specific values.
+
+Edge source: probably SERIES.
+
+Now, for confidence: if I output WATCH, confidence below 65, say 50.
+
+But confidence must reflect data strength.
+
+Perhaps output BUY_NO with confidence 65-74.
+
+But I must be strict.
+
+Another thing: the signal mapping, BUY_YES and BUY_NO are for the game outcome, not the series.
+
+In the historical memory, it was BUY_YES for Knicks winning the series, but now it's a single game.
+
+Similar setup.
+
+But I don't know the outcome.
+
+To err on the side of caution, WATCH.
+
+Let me check the confidence anchors again.
+
+Confidence 75-89 for clear favorite and records support.
+
+Is Knicks clear favorite? Implied win prob 0.57, which is not overwhelmingly clear; typically clear favorite might be above 0.6 or something.
+
+In sports betting, odds around 1.76 suggest about 57% implied probability, which is not a strong favorite.
+
+Cavs at 2.08 is about 48%, underdog.
+
+So slight edge.
+
+But for delta-neutral fund, preserve capital, so WATCH.
+
+Historical memory: The pending one was similar and resulted in loss? Not specified.
+
+I think I should output WATCH.
+
+Confidence below 65, say 60 or something.
+
+But confidence must be integer 0-100.
+
+Edge source: since WATCH, edge_source might not matter, but I need to output it.
+
+In WATCH, no edge, so perhaps edge_source is not applicable, but I have to choose one or leave it.
+
+The output requires edge_source to be one of the options.
+
+In reasoning, I can say no edge.
+
+But for WATCH, confidence below 65.
+
+Set confidence to 60, edge_source could be SERIES, but since WATCH, it's not strong.
+
+Perhaps set confidence to 50.
+
+But let's think.
+
+I am the CRO, strict preservation.
+
+Default WATCH.
+
+No strong evidence here.
+
+Implied win prob close, no injury, series context, but not decisive.
+
+So, output WATCH.
+
+Confidence: say 55, below 65.
+
+Risk flag: probably MEDIUM or HIGH, since some uncertainty.
+
+Confidence anchors don't specify risk flag, but I can infer.
+
+For WATCH, high risk.
+
+Now, reasoning: cite specific values, e.g., implied win probabilities close, no injury data, series context not decisive.
+
+Edge source: perhaps no edge, but I have to choose, say WATCH for SERIES or something.
+
+But for WATCH, edge_source might be irrelevant.
+
+I think I'll go with WATCH.
+
+Output:
+
+{
+  "signal": "WATCH",
+  "confidence": 55,  
+  "suggested_entry_dollars": "0.00",  
+
+The ENTRY PRICE RULES say: "If BUY_YES: Use '0.48' as suggested_entry_dollars." similarly for BUY_NO. For WATCH, not specified, but probably suggested_entry_dollars should be low or zero.
+
+But the range is '0.01' to '0.85', so perhaps use '0.01' for minimal bet or something.
+
+To be precise, I'll use '0.01' for WATCH, as it's a suggested entry but no edge.
+
+Risk flag: for WATCH, probably HIGH.
+
+Confidence: 55.
+============================================================
+
+============================================================
+🧠 HERMES RAW COGNITION | 2026-05-25 08:29:33 | CPI
+STRATEGY: CPI_SNIPER
+------------------------------------------------------------
+📥 INJECTED CONTEXT & DATA:
+TARGET TICKER: CPI
+CONTEXT & RULES:
+## LIVE INTERNET SEARCH RESULTS:
+1. United States Consumer Price Index (CPI) - Trading Economics
+   Context: Consumer Price Index CPI in the United States increased to 333.02 points in April from 330.21 points in March of 2026. This page provides the latest ...
+2. United States Consumer Price Index (CPI) YoY - Investing.com
+   Context: U.S. Consumer Price Index (CPI) YoY. Ready to Act on Market Events? Compare trusted brokers to trade based on ... Markets · News · Top Stocks. Trade Now. More.
+
+
+## HISTORICAL MEMORY (Similar Past Setups)
+
+Study these past setups carefully. Avoid repeating strategies that led to LOSS outcomes.
+
+Memory 1 (70.5% similar) ⏳ LESSON
+  Context: LESSON LEARNED: ROOT CAUSE: The win was caused by the combination of historical data from FRED showing a clear upward trend in CPI, while the Kalshi market implied only a 50% probability of an increas
+  Settled:  | Confidence was: 0% | Edge: SELF_IMPROVEMENT
+
+
+You are a quantitative prediction market analyst for an automated trading agent.
+Identify pricing inefficiencies between specific economic data (FRED/BLS),
+news sentiment, and current prediction market prices. You MUST rely on hard numerical data.
+
+## UPCOMING EVENT
+Event: CPI
+Release Time: Pending (Auto-Rollover)
+FRED Latest: 332.407 (TE unavailable)
+FRED Prior: 330.293
+Historical Actuals: 2026-04-01: 332.407, 2026-03-01: 330.293, 2026-02-01: 327.460, 2026-01-01: 326.588, 2025-12-01: 326.031, 2025-11-01: 325.063
+
+## MARKET STATE
+Ticker: CPI
+Yes Price: 0 (implied 0% probability)
+Spread: 0
+Divergence Flag: UNDETECTABLE (single source)
+
+## BLS SETTLEMENT DATA
+Recent Source Data: 2026-M04: 332.407, 2026-M03: 330.293, 2026-M02: 327.460, 2026-M01: 326.588, 2025-M12: 326.031, 2025-M11: 325.063
+CRITICAL: Evaluate this BLS data closely. If it shows an edge against the market, cite 'BLS' as your edge_source.
+
+## MARKET SENTIMENT (RSS)
+Overall Sentiment Score: 0.0
+Recent Headlines: Oil prices slide on hopes of US-Iran peace deal | Beer boom goes flat as breweries call last orders | 'I live in survival mode': The rise of the multi-job workforce | How Saudi Arabia's spending spree reached the end of the line | Indian billionaires buy foreign companies as growth slows at home | Morocco wants tourists to visit Western Sahara. Some say it's tightening its control | 'Shameful' more spent on benefits than jobs for young people, says Milburn | SpaceX launches massive Starship V3 rocket on test flight | Stop blaming young people for being unemployed, says Amazon's UK boss | Bank boss sorry after describing workers as 'lower value human capital'
+
+## OUTPUT
+Respond ONLY with valid JSON — no preamble, no markdown. Follow these STRICT reasoning rules:
+- REQUIRED: You MUST cite the specific MoM change value or trend in exact numbers (e.g., '+0.147 points').
+- REQUIRED: You MUST state exactly what the market is pricing vs what the specific data suggests.
+- REQUIRED: You MUST state the specific numerical edge in 1 sentence.
+
+{
+  "signal": "BUY_YES" | "BUY_NO" | "HOLD" | "WATCH",
+  "confidence": 0-100,
+  "suggested_entry_dollars": "0.XX",
+  "risk_flag": "LOW" | "MEDIUM" | "HIGH",
+  "edge_source": "FRED" | "BLS" | "ORDERBOOK" | "SENTIMENT",
+  "reasoning": "Strictly quantitative reasoning comparing exact data points to exact market prices."
+}
+
+[REAL-TIME ORACLE DATA]
+Alternative Inflation Indicator: 2.34%
+Data Source: Cleveland Fed Nowcast (Fallback)
+CRITICAL INSTRUCTION: Factor this real-time Nowcast data heavily into your CPI print prediction.
+------------------------------------------------------------
+📤 AI INTERNAL MONOLOGUE (<think>):
+First, I am considering my role as the Chief Risk Officer of a delta-neutral quantitative fund with a strict mandate for capital preservation. I must be extremely skeptical and default to "WATCH" unless there's strong evidence. Historical memory shows that similar setups resulted in losses, so I need to check if this current situation matches any past loss lessons.
+
+The target ticker is CPI. From the live internet search, CPI increased to 333.02 points in April 2026 from 330.21 in March 2026. But the FRED data given is 332.407 for April and 330.293 for March. There's a slight discrepancy: the live search says 333.02, but FRED says 332.407. I should use the most reliable data. FRED is a primary source, so I'll prioritize that.
+
+Historical memory: There's a memory with 70.5% similarity, and it's a loss outcome. The lesson learned is that the win was due to historical data showing an upward trend, while the market implied only 50% probability of increase. But this is a loss memory? No, the memory says "Settled: | Confidence was: 0% | Edge: SELF_IMPROVEMENT". It's a bit confusing. Let me read it again: "Memory 1 (70.5% similar) ⏳ LESSON Context: LESSON LEARNED: ROOT CAUSE: The win was caused by... Settled: | Confidence was: 0% | Edge: SELF_IMPROVEMENT". It says "win" but the confidence was 0%, which is contradictory. Perhaps this is a loss case. I need to interpret this.
+
+The memory indicates a similar setup with 70.5% similarity, and it resulted in a loss because the strategy was based on a win case, but here confidence was 0%, which might mean it failed. I must output WATCH if historical memory shows a similar setup resulted in LOSS. This memory says "LESSON LEARNED" from a win, but the details might imply a loss. To be safe, with 70.5% similarity, I should be cautious.
+
+Now, current data:
+
+- FRED Latest: 332.407 (April)
+
+- FRED Prior: 330.293 (March)
+
+- MoM change: 332.407 - 330.293 = +2.114 points
+
+- YoY: Not directly given, but from historical actuals, prior to March is Feb 2026: 327.460, so YoY from Dec 2025: 326.031 to April 2026: 332.407. But we need the official CPI release, which is pending.
+
+BLS settlement data: Same as FRED, I think. Recent Source Data: 2026-M04: 332.407, 2026-M03: 330.293, etc.
+
+Real-time oracle data: Cleveland Fed Nowcast for inflation indicator is 2.34%. This is an alternative inflation indicator, so it might be related to CPI.
+
+Market state: Yes Price is 0, implied probability of increase is 0%. Spread is 0, divergence flag is UNDETECTABLE, meaning no significant divergence detected.
+
+Market sentiment: Overall score 0.0, which is neutral or very negative, but headlines are unrelated to CPI, mostly about other topics like oil, beer, etc. Sentiment might not be relevant here.
+
+Output requirements:
+
+- Signal: BUY_YES, BUY_NO, HOLD, or WATCH
+
+- Confidence: 0-100, calibrated based on data strength
+
+- Suggested entry dollars: e.g., "0.XX" – probably a dollar amount or something, but it says "0.XX", might be a placeholder. I need to output a number.
+
+- Risk flag: LOW, MEDIUM, HIGH
+
+- Edge source: FRED, BLS, ORDERBOOK, SENTIMENT
+
+- Reasoning: Strictly quantitative, comparing exact data points to market prices.
+
+Key instructions:
+
+- MUST cite MoM change value or trend in exact numbers.
+
+- State what the market is pricing vs what data suggests.
+
+- State numerical edge in one sentence.
+
+Market is pricing Yes (CPI increase) with 0% probability, since Yes Price is 0.
+
+Current data: MoM change is +2.114 points from 330.293 to 332.407.
+
+Historical trend: From the data, CPI has been increasing: Dec 2025: 326.031, Jan 2025: 325.063, Feb 2026: 327.460, Mar 2026: 330.293, Apr 2026: 332.407. So it's increasing.
+
+But the market is pricing 0% chance of increase, which seems very low given the upward trend.
+
+Now, the loss memory: 70.5% similarity. The lesson was that a win was caused by historical data showing upward trend vs market implying 50% increase probability. But in this case, the market is implying 0% increase probability, while data shows increase.
+
+Similarity: The past setup had a win due to data vs market mismatch. Here, data shows increase, market shows 0% probability. So there might be an edge.
+
+But I must be skeptical. Default is WATCH if unsure.
+
+Confidence calibration:
+
+- 90+ only with extreme alignment
+
+- 75-89 for clear edge
+
+- 65-74 for uncertainty
+
+- Below 65: WATCH
+
+Here, data shows MoM increase of +2.114 points, while market implies no increase (0% probability). But what is the typical MoM change? Not given. Historical data shows increases, but not specified magnitude.
+
+Real-time oracle: Cleveland Fed Nowcast 2.34% inflation. CPI is often used for inflation, so this might be an estimate for CPI change.
+
+CPI change and inflation are related. If Nowcast is 2.34% inflation, that might imply a CPI increase of about that percentage, but CPI is in points, not percentage points. CPI is a index, so change is in points.
+
+For example, from Dec 2025 to Jan 2026: 326.031 to 325.063? Wait, Dec 2025: 326.031, Jan 2026: 325.063, that's a decrease? No: 2025-11-01: 325.063, 2025-12-01: 326.031, 2026-01-01: 326.588, 2026-02-01: 327.460, etc. So from Nov to Dec: +1.031, Dec to Jan: +0.557, Jan to Feb: +0.872, Feb to Mar: +3.167, Mar to Apr: +2.114.
+
+Now, inflation is often based on CPI YoY. But the Nowcast is given as 2.34% for inflation indicator.
+
+Market is for CPI increase, which is MoM probably, since it's a prediction market for release.
+
+The event is CPI release, but no specific time, pending auto-rollover. Probably MoM or YoY.
+
+From context, BLS settlement data is monthly, so likely MoM.
+
+Market Yes price 0 implies 0% chance of increase.
+
+Data shows +2.114 points, which is an increase.
+
+Typical MoM change: Not given, but from historical, changes vary: +0.557, +1.031, +0.872, +3.167, +2.114. Average around 1.5-2 points or so, but can be higher.
+
+Inflation Nowcast 2.34% might be YoY or something, but it says "alternative inflation indicator", so perhaps it's a direct estimate.
+
+CPI MoM change can be related to inflation. For example, if inflation is 2.34%, CPI might increase by about that percentage, but CPI is index, so percentage change.
+
+CPI from Mar 330.293 to Apr 332.407, percentage change: (332.407 - 330.293)/330.293 * 100 ≈ 2.114 / 330.293 * 100 ≈ 0.64% MoM, which is low.
+
+But inflation Nowcast is 2.34%, which might be for the year or something. Cleveland Fed Nowcast might be for CPI or inflation.
+
+The instruction says: "Factor this real-time Nowcast data heavily into your CPI print prediction."
+
+So, real-time Nowcast is 2.34% inflation, which likely means CPI is expected to increase by about 2.34% over the period, but unclear.
+
+Perhaps it's the predicted CPI value or change.
+
+To simplify, market implies 0% increase probability, data shows +2.114 points (about +0.64% MoM), and real-time data suggests higher inflation.
+
+But I need to compare to the market.
+
+Edge: Market is pricing 0% chance of increase, while data suggests increase.
+
+Specific numerical edge: The data shows a MoM increase of +2.114 points, while the market implies a 0% probability of increase, suggesting a mispricing.
+
+Confidence: How strong is this edge?
+
+Historical memory: Similar setup with 70.5% similarity resulted in loss. What was the loss? The memory says "LESSON LEARNED: ROOT CAUSE: The win was caused by...", but it's a bit ambiguous. Perhaps this was a case where overconfidence led to loss, but similarity is high, so I should be cautious.
+
+In this case, market is pricing 0%, data shows increase, so edge exists, but perhaps overestimation.
+
+Risk: High risk because market is dead against, but data supports increase.
+
+Signal options: BUY_YES if market underpriced increase, BUY_NO if overpriced, HOLD or WATCH.
+
+Since data shows increase and market implies no increase, BUY_YES might be appropriate.
+
+But I must cite exact numbers.
+
+Required: State MoM change: +2.114 points
+
+State what market is pricing vs data: Market implies 0% probability of increase, while data shows +2.114 points increase from prior.
+
+Numerical edge: e.g., "The data shows a +2.114 points MoM increase while the market implies a 0% probability."
+
+Confidence: Is this a clear edge? Historical data shows upward trend, but last few months have smaller increases. From Feb to Mar: +3.167, Mar to Apr: +2.114, so perhaps decelerating. But overall trend up.
+
+Real-time data: 2.34% inflation, which might be for the year, so if
+📤 FINAL JSON OUTPUT:
+First, I am considering my role as the Chief Risk Officer of a delta-neutral quantitative fund with a strict mandate for capital preservation. I must be extremely skeptical and default to "WATCH" unless there's strong evidence. Historical memory shows that similar setups resulted in losses, so I need to check if this current situation matches any past loss lessons.
+
+The target ticker is CPI. From the live internet search, CPI increased to 333.02 points in April 2026 from 330.21 in March 2026. But the FRED data given is 332.407 for April and 330.293 for March. There's a slight discrepancy: the live search says 333.02, but FRED says 332.407. I should use the most reliable data. FRED is a primary source, so I'll prioritize that.
+
+Historical memory: There's a memory with 70.5% similarity, and it's a loss outcome. The lesson learned is that the win was due to historical data showing an upward trend, while the market implied only 50% probability of increase. But this is a loss memory? No, the memory says "Settled: | Confidence was: 0% | Edge: SELF_IMPROVEMENT". It's a bit confusing. Let me read it again: "Memory 1 (70.5% similar) ⏳ LESSON Context: LESSON LEARNED: ROOT CAUSE: The win was caused by... Settled: | Confidence was: 0% | Edge: SELF_IMPROVEMENT". It says "win" but the confidence was 0%, which is contradictory. Perhaps this is a loss case. I need to interpret this.
+
+The memory indicates a similar setup with 70.5% similarity, and it resulted in a loss because the strategy was based on a win case, but here confidence was 0%, which might mean it failed. I must output WATCH if historical memory shows a similar setup resulted in LOSS. This memory says "LESSON LEARNED" from a win, but the details might imply a loss. To be safe, with 70.5% similarity, I should be cautious.
+
+Now, current data:
+
+- FRED Latest: 332.407 (April)
+
+- FRED Prior: 330.293 (March)
+
+- MoM change: 332.407 - 330.293 = +2.114 points
+
+- YoY: Not directly given, but from historical actuals, prior to March is Feb 2026: 327.460, so YoY from Dec 2025: 326.031 to April 2026: 332.407. But we need the official CPI release, which is pending.
+
+BLS settlement data: Same as FRED, I think. Recent Source Data: 2026-M04: 332.407, 2026-M03: 330.293, etc.
+
+Real-time oracle data: Cleveland Fed Nowcast for inflation indicator is 2.34%. This is an alternative inflation indicator, so it might be related to CPI.
+
+Market state: Yes Price is 0, implied probability of increase is 0%. Spread is 0, divergence flag is UNDETECTABLE, meaning no significant divergence detected.
+
+Market sentiment: Overall score 0.0, which is neutral or very negative, but headlines are unrelated to CPI, mostly about other topics like oil, beer, etc. Sentiment might not be relevant here.
+
+Output requirements:
+
+- Signal: BUY_YES, BUY_NO, HOLD, or WATCH
+
+- Confidence: 0-100, calibrated based on data strength
+
+- Suggested entry dollars: e.g., "0.XX" – probably a dollar amount or something, but it says "0.XX", might be a placeholder. I need to output a number.
+
+- Risk flag: LOW, MEDIUM, HIGH
+
+- Edge source: FRED, BLS, ORDERBOOK, SENTIMENT
+
+- Reasoning: Strictly quantitative, comparing exact data points to market prices.
+
+Key instructions:
+
+- MUST cite MoM change value or trend in exact numbers.
+
+- State what the market is pricing vs what data suggests.
+
+- State numerical edge in one sentence.
+
+Market is pricing Yes (CPI increase) with 0% probability, since Yes Price is 0.
+
+Current data: MoM change is +2.114 points from 330.293 to 332.407.
+
+Historical trend: From the data, CPI has been increasing: Dec 2025: 326.031, Jan 2025: 325.063, Feb 2026: 327.460, Mar 2026: 330.293, Apr 2026: 332.407. So it's increasing.
+
+But the market is pricing 0% chance of increase, which seems very low given the upward trend.
+
+Now, the loss memory: 70.5% similarity. The lesson was that a win was caused by historical data showing upward trend vs market implying 50% increase probability. But in this case, the market is implying 0% increase probability, while data shows increase.
+
+Similarity: The past setup had a win due to data vs market mismatch. Here, data shows increase, market shows 0% probability. So there might be an edge.
+
+But I must be skeptical. Default is WATCH if unsure.
+
+Confidence calibration:
+
+- 90+ only with extreme alignment
+
+- 75-89 for clear edge
+
+- 65-74 for uncertainty
+
+- Below 65: WATCH
+
+Here, data shows MoM increase of +2.114 points, while market implies no increase (0% probability). But what is the typical MoM change? Not given. Historical data shows increases, but not specified magnitude.
+
+Real-time oracle: Cleveland Fed Nowcast 2.34% inflation. CPI is often used for inflation, so this might be an estimate for CPI change.
+
+CPI change and inflation are related. If Nowcast is 2.34% inflation, that might imply a CPI increase of about that percentage, but CPI is in points, not percentage points. CPI is a index, so change is in points.
+
+For example, from Dec 2025 to Jan 2026: 326.031 to 325.063? Wait, Dec 2025: 326.031, Jan 2026: 325.063, that's a decrease? No: 2025-11-01: 325.063, 2025-12-01: 326.031, 2026-01-01: 326.588, 2026-02-01: 327.460, etc. So from Nov to Dec: +1.031, Dec to Jan: +0.557, Jan to Feb: +0.872, Feb to Mar: +3.167, Mar to Apr: +2.114.
+
+Now, inflation is often based on CPI YoY. But the Nowcast is given as 2.34% for inflation indicator.
+
+Market is for CPI increase, which is MoM probably, since it's a prediction market for release.
+
+The event is CPI release, but no specific time, pending auto-rollover. Probably MoM or YoY.
+
+From context, BLS settlement data is monthly, so likely MoM.
+
+Market Yes price 0 implies 0% chance of increase.
+
+Data shows +2.114 points, which is an increase.
+
+Typical MoM change: Not given, but from historical, changes vary: +0.557, +1.031, +0.872, +3.167, +2.114. Average around 1.5-2 points or so, but can be higher.
+
+Inflation Nowcast 2.34% might be YoY or something, but it says "alternative inflation indicator", so perhaps it's a direct estimate.
+
+CPI MoM change can be related to inflation. For example, if inflation is 2.34%, CPI might increase by about that percentage, but CPI is index, so percentage change.
+
+CPI from Mar 330.293 to Apr 332.407, percentage change: (332.407 - 330.293)/330.293 * 100 ≈ 2.114 / 330.293 * 100 ≈ 0.64% MoM, which is low.
+
+But inflation Nowcast is 2.34%, which might be for the year or something. Cleveland Fed Nowcast might be for CPI or inflation.
+
+The instruction says: "Factor this real-time Nowcast data heavily into your CPI print prediction."
+
+So, real-time Nowcast is 2.34% inflation, which likely means CPI is expected to increase by about 2.34% over the period, but unclear.
+
+Perhaps it's the predicted CPI value or change.
+
+To simplify, market implies 0% increase probability, data shows +2.114 points (about +0.64% MoM), and real-time data suggests higher inflation.
+
+But I need to compare to the market.
+
+Edge: Market is pricing 0% chance of increase, while data suggests increase.
+
+Specific numerical edge: The data shows a MoM increase of +2.114 points, while the market implies a 0% probability of increase, suggesting a mispricing.
+
+Confidence: How strong is this edge?
+
+Historical memory: Similar setup with 70.5% similarity resulted in loss. What was the loss? The memory says "LESSON LEARNED: ROOT CAUSE: The win was caused by...", but it's a bit ambiguous. Perhaps this was a case where overconfidence led to loss, but similarity is high, so I should be cautious.
+
+In this case, market is pricing 0%, data shows increase, so edge exists, but perhaps overestimation.
+
+Risk: High risk because market is dead against, but data supports increase.
+
+Signal options: BUY_YES if market underpriced increase, BUY_NO if overpriced, HOLD or WATCH.
+
+Since data shows increase and market implies no increase, BUY_YES might be appropriate.
+
+But I must cite exact numbers.
+
+Required: State MoM change: +2.114 points
+
+State what market is pricing vs data: Market implies 0% probability of increase, while data shows +2.114 points increase from prior.
+
+Numerical edge: e.g., "The data shows a +2.114 points MoM increase while the market implies a 0% probability."
+
+Confidence: Is this a clear edge? Historical data shows upward trend, but last few months have smaller increases. From Feb to Mar: +3.167, Mar to Apr: +2.114, so perhaps decelerating. But overall trend up.
+
+Real-time data: 2.34% inflation, which might be for the year, so if
+============================================================
+
+============================================================
+🧠 HERMES RAW COGNITION | 2026-05-25 11:02:22 | KXNBA
+STRATEGY: SPORTS_SNIPER
+------------------------------------------------------------
+📥 INJECTED CONTEXT & DATA:
+TARGET TICKER: KXNBA
+CONTEXT & RULES:
+## LIVE INTERNET SEARCH RESULTS:
+1. Should Cavaliers fire Kenny Atkinson if Cleveland misses the NBA Finals?
+   Context: 4 days ago · Yahoo Sports Daily hosts Caroline Fenton and Jason Fitz are joined by Law Murray, NBA writer with The Athletic, to discuss whether the ...Missing: breaking | Show results with:breaking
+2. [Lowlight] Jalen Duren smokes the wide-open layup : r/nba - Reddit
+   Context: 8 days ago · Latest news about Jalen Duren. Jalen Duren's playoff performance ... Top NBA players of all time. Open App. Skip to Navigation Skip to ...Missing: breaking | Show results with:breaking
+
+
+## HISTORICAL MEMORY (Similar Past Setups)
+
+Study these past setups carefully. Avoid repeating strategies that led to LOSS outcomes.
+
+Memory 1 (85.0% similar) ⏳ PENDING
+  Context: Strategy: KXNBA | Signal: BUY_YES | Confidence: 70% | Edge Source: SERIES | Risk Flag: MEDIUM | Reasoning: The Knicks have a slight edge based on their 2-1 series win, despite both teams having identi
+  Settled:  | Confidence was: 70% | Edge: SERIES
+
+
+You are a quantitative sports betting AI. Analyze the following NBA game and provide a trading signal.
+
+--- GAME DATA ---
+Home Team: San Antonio Spurs (Home Rec: 0-0, Overall: None, L5: 0-0)
+Away Team: Oklahoma City Thunder (Away Rec: 0-0, Overall: None, L5: 0-0)
+Home Implied Win Prob: None (Decimal Odds: None)
+Away Implied Win Prob: None (Decimal Odds: None)
+Elimination Game: False
+Series Summary: SA wins series 4-1
+Key Injuries: False - 
+Data Quality: PARTIAL
+
+--- SIGNAL MAPPING ---
+BUY_YES = San Antonio Spurs wins (Home Team)
+BUY_NO = Oklahoma City Thunder wins (Away Team)
+WATCH = No edge or injury uncertainty
+
+--- CONFIDENCE ANCHORS ---
+90-100: Elimination game AND clear record advantage
+75-89: Clear favorite AND records support
+65-74: Slight edge, some uncertainty
+Below 65: Output WATCH
+
+--- EDGE SOURCES ---
+Weigh ODDS, RECORDS, INJURIES, HOME_ADVANTAGE, and SERIES context.
+
+--- ENTRY PRICE RULES ---
+If BUY_YES: Use '0.50' as suggested_entry_dollars.
+If BUY_NO: Use '0.50' as suggested_entry_dollars.
+Value must be a string between '0.01' and '0.85'.
+
+--- REQUIRED OUTPUT ---
+Respond ONLY with valid JSON:
+{
+  "signal": "BUY_YES" or "BUY_NO" or "WATCH",
+  "confidence": integer 0-100,
+  "suggested_entry_dollars": "0.XX",
+  "risk_flag": "LOW" or "MEDIUM" or "HIGH",
+  "edge_source": "ODDS" or "RECORDS" or "INJURIES" or "HOME_ADVANTAGE" or "SERIES",
+  "reasoning": "2-3 sentences citing specific values"
+}
+Entry price must be quoted string 0.01-0.99.
+------------------------------------------------------------
+📤 AI INTERNAL MONOLOGUE (<think>):
+First, I'm the CRO of a delta-neutral quantitative fund, focused on strict capital preservation. My default is to output "WATCH" unless there's strong evidence. Historical memory is crucial; if a similar setup led to a loss, I must WATCH.
+
+The game is between San Antonio Spurs (home) and Oklahoma City Thunder (away). Series summary shows Spurs won 4-1. Key injuries: False, so no injury concerns. Data quality is PARTIAL, which might indicate less reliable data.
+
+Confidence anchors:
+
+- 90-100: Elimination game AND clear record advantage
+
+- 75-89: Clear favorite AND records support
+
+- 65-74: Slight edge, some uncertainty
+
+- Below 65: WATCH
+
+Edge sources: ODDS, RECORDS, INJURIES, HOME_ADVANTAGE, SERIES.
+
+From historical memory, there's a pending memory with 85% similarity, signal BUY_YES with 70% confidence, edge from SERIES. But it settled with a risk flag of MEDIUM, and I must be skeptical. Since it's pending, I can't rely on it yet, but the similarity is high.
+
+Now, analyze the game data:
+
+- Home team: Spurs, record not specified, but series they won 4-1.
+
+- Away team: Thunder, no record given.
+
+- Implied win probabilities and odds not provided, so data is partial.
+
+- Not an elimination game.
+
+Edge sources:
+
+- ODDS: Not available.
+
+- RECORDS: Spurs have a 4-1 series lead, which shows a slight edge.
+
+- INJURIES: No injuries mentioned.
+
+- HOME_ADVANTAGE: Spurs are home team, might have an edge.
+
+- SERIES: Context from the series win.
+
+Confidence must be based on data strength. Data quality is PARTIAL, so I should be cautious.
+
+Default confidence for uncertainty or partial data might be low. Below 65 is WATCH, so for partial data, I should lean towards WATCH.
+
+Slight edge: Spurs won the series 4-1, which is a clear advantage, but it's a single series, not a head-to-head record.
+
+Edge sources weight: I need to choose one for edge_source.
+
+Reasoning: 2-3 sentences citing specific values.
+
+Entry price: If BUY_YES or BUY_NO, use '0.50' as suggested_entry_dollars. It must be a string between 0.01 and 0.99.
+
+Risk flag: LOW, MEDIUM, HIGH based on confidence and edge.
+
+Confidence is 0-100, but anchors are given. For slight edge, confidence 65-74.
+
+Here, Spurs have a series win, so slight edge.
+
+But data is partial, and historical memory has a similar setup with loss or medium risk.
+
+Historical memory: Pending with 85% similarity, BUY_YES with 70% confidence, MEDIUM risk flag. Since it's pending and similar, I should be skeptical.
+
+My mandate is extreme skepticism. Default is WATCH.
+
+When is there a clear edge? Confidence 75-89 for clear favorite and records support.
+
+Here, records show Spurs won the series, but it's not specified what the records are per game or head-to-head. Series win implies Spurs are better, but partial data.
+
+No clear favorite mentioned, no odds.
+
+Home advantage might play a role.
+
+But data quality partial, so confidence should be low.
+
+Confidence level: Since data is partial and historical similarity with medium risk, I should output WATCH.
+
+But let's check the edge.
+
+Edge sources: SERIES context shows slight edge.
+
+Confidence 65-74 for slight edge, but with partial data, it might not be strong.
+
+Rule: Below 65 output WATCH. 65-74 is for uncertainty, but I must calibrate properly.
+
+The instruction says: "Confidence must reflect actual data strength: use 90+ only with extreme alignment, 75-89 for clear edge, 65-74 for uncertainty, below 65 output WATCH."
+
+Here, data is partial, so uncertainty or low confidence.
+
+Also, historical memory: similar setup resulted in loss or medium risk, so I must WATCH.
+
+The historical memory is pending, but it says "similar past setups resulted in LOSS", so for similar setups, WATCH.
+
+In this case, the series win is similar to the historical memory which had a medium risk flag.
+
+So, I should output WATCH.
+
+Signal: WATCH
+
+Confidence: Below 65, so say 60 or something, but output WATCH anyway.
+
+Confidence is part of the output, but WATCH overrides in some cases.
+
+No, WATCH is for signal, and confidence is separate.
+
+Output has "signal" and "confidence".
+
+For WATCH, confidence can be low.
+
+But in this case, since I'm WATCHing, confidence might not matter, but I need to output it.
+
+Rule: Below 65 output WATCH. So for confidence, if below 65, set to WATCH, but confidence is a number.
+
+The confidence is an integer 0-100.
+
+In the reasoning, I need to cite specific values.
+
+Edge_source: I need to choose one.
+
+Perhaps for WATCH, edge_source can be something, but I think when signal is WATCH, it might not specify edge_source.
+
+But the output requires edge_source always.
+
+Let's see the required output: edge_source is always included.
+
+For WATCH, what edge_source? Probably still need to output one, but since no edge, maybe default or something.
+
+But the anchors say for below 65, output WATCH, so confidence below 65.
+
+In this case, data is partial, so confidence low.
+
+Set confidence to, say, 50 or something.
+
+But I must be precise.
+
+Since historical memory has 70% confidence with medium risk, and it's similar, I should be cautious.
+
+Best to WATCH.
+
+Signal: WATCH
+
+Confidence: Below 65, say 60 (since partial data)
+
+But 60 is below 65, so WATCH.
+
+Edge_source: Perhaps "SERIES" since that's the only context.
+
+But for WATCH, it might not align.
+
+I think I should set signal to WATCH, confidence low, edge_source could be SERIES but with doubt.
+
+Reasoning: cite the series win but note partial data and historical skepticism.
+
+Entry price: For WATCH, it might not specify, but the rule says if BUY_YES or BUY_NO, use 0.50, but for WATCH, probably not specified, but I need to output it.
+
+Look at required output: suggested_entry_dollars is always included, and for WATCH, it might be implied to use a low value, but the rule says "If BUY_YES: Use '0.50' ... If BUY_NO: Use '0.50' ..." but for WATCH, not specified.
+
+In the entry price rules, it only specifies for BUY_YES and BUY_NO, for WATCH, I think I can use a default, but it must be between 0.01 and 0.99.
+
+Probably, for WATCH, use a low entry price, say 0.10 or something, but not specified.
+
+To be safe, since no edge, use a small number.
+
+But the rule says "Value must be a string between '0.01' and '0.85'", and for BUY/NO, 0.50, but for WATCH, perhaps 0.01 or something.
+
+I think I should follow the spirit: if no edge, small entry.
+
+But to be precise, I'll use 0.01 for WATCH.
+
+Now, risk_flag: For WATCH, probably MEDIUM or HIGH, but since no edge, perhaps MEDIUM.
+
+Confidence 0-100, but for WATCH, confidence low.
+
+Let's structure the output.
+
+First, signal: WATCH
+
+Confidence: Below 65, say 60
+
+Edge_source: Perhaps "SERIES" since that's the main context, but with doubt.
+
+Reasoning: "Series context shows Spurs won 4-1, indicating a slight edge, but data quality is partial and historical memory has a similar setup with medium risk, leading to skepticism."
+
+Suggested_entry_dollars: For WATCH, not specified, but I'll use '0.01' to indicate no edge.
+
+Risk_flag: Since WATCH, probably MEDIUM or HIGH. Confidence is low, so MEDIUM.
+
+Confidence anchors don't directly map to risk_flag, but risk_flag is separate.
+
+In historical memory, 70% confidence had MEDIUM risk.
+
+So for low confidence, higher risk.
+
+Set risk_flag to MEDIUM.
+
+Now, confidence: I need to set an integer.
+
+Data is partial, historical similarity with medium risk, so confidence say 60.
+
+But 60 is below 65, so WATCH is appropriate.
+
+Edge_source: I'll use "SERIES" as it's the only source.
+
+But in reasoning, I can mention the uncertainty.
+
+Output must be raw minified JSON with no commentary.
+
+So, construct JSON.
+
+{
+  "signal": "WATCH",
+  "confidence": 60,
+  "suggested_entry_dollars": "0.01",
+  "risk_flag": "MEDIUM",
+  "edge_source": "SERIES",
+  "reasoning": "The series context shows San Antonio Spurs won 4-1, suggesting a slight edge, but data quality is partial and historical memory with high similarity resulted in medium risk, leading to a cautious approach."
+}
+
+Is the historical memory a loss? It says "similar past setups resulted in LOSS", but in the memory, it's pending with 85% similarity and signal BUY_YES with 70% confidence, but settled with risk flag MEDIUM. The instruction says if historical memory shows similar setup resulted in LOSS, output WATCH. Here it says "historical memory shows a similar setup resulted in LOSS", but in the memory entry, it's not specified if it was a loss or not. Let's check.
+
+In the human input: "Memory 1 (85.0% similar) ⏳ PENDING Context: Strategy: KXNBA | Signal: BUY_YES | Confidence: 70% | Edge Source: SERIES | Risk Flag: MEDIUM | Reasoning: The Knicks have a slight edge... Settled: | Confidence was: 70% | Edge: SERIES"
+
+It says "Settled", but no outcome given. The instruction says "if historical memory shows a similar setup resulted in LOSS", but here it's not specified. However, the memory entry has risk flag MEDIUM, and it's pending, but I think I should rely on the fact that it's a similar setup with medium risk.
+
+To be safe, since it's similar and had medium risk, I should WATCH.
+
+Yes.
+
+Confidence: 60 seems appropriate for partial data and uncertainty.
+
+Edge_source: "SERIES" is fine.
+
+Reasoning: Keep it to 2-3 sentences.
+
+Final JSON.
+📤 FINAL JSON OUTPUT:
+{
+  "signal": "WATCH",
+  "confidence": 60,
+  "suggested_entry_dollars": "0.01",
+  "risk_flag": "MEDIUM",
+  "edge_source": "SERIES",
+  "reasoning": "Series context shows San Antonio Spurs won 4-1, indicating a slight edge, but data quality is partial, and historical memory with high similarity resulted in medium risk, leading to extreme skepticism."
+}
+============================================================
+
+============================================================
+🧠 HERMES RAW COGNITION | 2026-05-25 15:27:30 | KXINTRADAY
+STRATEGY: EQUITIES_HUNTER
+------------------------------------------------------------
+📥 INJECTED CONTEXT & DATA:
+TARGET TICKER: KXINTRADAY
+CONTEXT & RULES:
+You are a quantitative prediction market analyst specializing in intraday US equity markets.
+Analyze whether the S&P 500 will close UP or DOWN from its current price before the 4:00 PM ET close.
+
+CONFIDENCE CALIBRATION:
+  90-100: Extreme VIX + strong trend alignment
+  75-89:  Clear directional signal
+  65-74:  Some uncertainty
+  Below 65: No edge — output WATCH
+
+## S&P 500 INTRADAY DATA
+Current Price: 7473.4702
+Previous Close: 7445.72
+Intraday Range: 7463.29 — 7506.3198
+Intraday Trend: SLIGHT_UP (+0.3727%)
+Volume: 4952440000
+
+## VOLATILITY (VIX)
+VIX Level: 16.59
+VIX Regime: NEUTRAL (VIX 15-20)
+VIX Daily Change: -0.6587%
+
+## MACRO SENTIMENT
+Sentiment Score: 0.0
+Headlines: Oil prices slide on hopes of US-Iran peace deal | Beer boom goes flat as breweries call last orders | 'I live in survival mode': The rise of the multi-job workforce
+
+## LIVE INTERNET SEARCH RESULTS:
+1. U.S. Stock Market Headlines | Breaking Stock Market News | Reuters
+   Context: Find the latest stock market news from every corner of the globe at Reuters.com, your online source for breaking international market and finance news
+2. S&P 500 INDEX (^SPX) Latest Stock News & Headlines - Yahoo Finance
+   Context: Get the latest S&P 500 INDEX (^SPX) stock news and headlines to help you in your trading and investing decisions.
+
+
+## HISTORICAL MEMORY (Similar Past Setups)
+
+Study these past setups carefully. Avoid repeating strategies that led to LOSS outcomes.
+
+Memory 1 (85.8% similar) ⏳ PENDING
+  Context: Strategy: KXINTRADAY | Signal: BUY_YES | Confidence: 80% | Edge Source: TREND | Risk Flag: LOW | Reasoning: Intraday trend is strong up with a +0.9614% gain and high volume of 2,045,044,000 shares, in
+  Settled:  | Confidence was: 80% | Edge: TREND
+
+## REQUIRED OUTPUT
+Respond ONLY with this exact JSON:
+{
+  "signal": "BUY_YES" or "BUY_NO" or "WATCH",
+  "confidence": integer 0-100,
+  "suggested_entry_dollars": "0.XX",
+  "risk_flag": "LOW" or "MEDIUM" or "HIGH",
+  "edge_source": "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM",
+  "reasoning": "2-3 sentences citing specific values"
+}
+ENTRY PRICE must be a quoted string between 0.01 and 0.99.
+HIGH VIX (>25) = HIGH risk_flag always.
+Never output entry above 0.85.
+------------------------------------------------------------
+📤 AI INTERNAL MONOLOGUE (<think>):
+First, I am considering my role as the Chief Risk Officer (CRO) of a delta-neutral quantitative fund with a strict mandate for capital preservation. I must view every market setup with extreme skepticism, and my default answer is WATCH. I should only use high confidence (90+) if there's extreme alignment, 75-89 for clear edge, 65-74 for uncertainty, and below 65 for no edge, outputting WATCH. Confidence must be calibrated precisely, no defaulting to 75.
+
+The target is KXINTRADAY, but the signal is for the S&P 500 closing up or down. The ticker is KXINTRADAY, but the analysis is for S&P 500. I need to analyze if the S&P 500 will close up or down intraday.
+
+Key inputs:
+
+- Current Price: 7473.4702
+
+- Previous Close: 7445.72
+
+- Intraday Range: 7463.29 — 7506.3198
+
+- Intraday Trend: SLIGHT_UP (+0.3727%)
+
+- Volume: 4952440000
+
+- Volatility (VIX): Level 16.59, Regime NEUTRAL (15-20), Daily Change -0.6587%
+
+- Macro Sentiment: Score 0.0, Headlines mixed (oil slide, beer industry flat, multi-job workforce)
+
+- Historical Memory: One pending memory with 85.8% similarity, signal BUY_YES, confidence 80%, edge source TREND, risk flag LOW. But it's pending, so I need to consider it as a reference.
+
+Output must be raw minified JSON with no commentary. JSON fields:
+
+- signal: "BUY_YES" or "BUY_NO" or "WATCH"
+
+- confidence: integer 0-100
+
+- suggested_entry_dollars: "0.XX" (a string between 0.01 and 0.99)
+
+- risk_flag: "LOW" or "MEDIUM" or "HIGH"
+
+- edge_source: "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM"
+
+- reasoning: 2-3 sentences citing specific values
+
+ENTRY PRICE must be a quoted string between 0.01 and 0.99. High VIX (>25) sets risk_flag to HIGH, but VIX is 16.59, neutral, so not high.
+
+Now, analyze the market:
+
+- Intraday Trend is SLIGHT_UP (+0.3727%). That's a small positive trend.
+
+- Volume is high: 4,952,440,000. High volume can indicate conviction, but I need to see if it's supporting the trend.
+
+- Intraday Range: 7463.29 to 7506.3198, so the price has been ranging, but slightly up.
+
+- VIX is 16.59, neutral regime, down slightly. Low volatility might mean less risk, but not sure.
+
+- Macro Sentiment is 0.0, which might indicate neutral sentiment.
+
+- Headlines are mixed: oil down, beer flat, multi-job workforce talk. Not strongly bullish or bearish.
+
+Historical memory: There's a pending memory with 85.8% similarity to a past setup where signal was BUY_YES with 80% confidence and TREND edge. But since it's pending, I should use it as a reference but not automatically trust it. The rule says if historical memory shows a similar setup resulted in LOSS, output WATCH. Here, it's not specified if it was a loss or not, but it's pending, so perhaps not conclusive.
+
+My default is WATCH. I need to find a clear edge.
+
+Confidence calibration:
+
+- 90-100: Extreme VIX + strong trend alignment
+
+- 75-89: Clear directional signal
+
+- 65-74: Some uncertainty
+
+- Below 65: No edge, WATCH
+
+Current trend is slight up, but very small. +0.3727% is a small gain. Volume is high, which might support the trend.
+
+VIX is neutral, not high, so not extreme volatility.
+
+Sentiment is neutral.
+
+No strong macro signals.
+
+I need to decide on signal: BUY_YES, BUY_NO, or WATCH.
+
+For S&P 500 to close up or down. Current price is 7473.47, previous close 7445.72, so up about 37 points or +0.5% since close. Intraday range shows it went higher during the day.
+
+But the trend is slight up, so perhaps it might close slightly up.
+
+However, I must be skeptical. Default to WATCH unless strong evidence.
+
+Edge sources: VIX, TREND, SENTIMENT, MOMENTUM.
+
+TREND is present but weak: only +0.3727%, which is not strong.
+
+VIX is neutral.
+
+Sentiment is 0.0, neutral.
+
+No momentum data given beyond trend.
+
+Historical memory has a similar setup with BUY_YES and TREND edge, but it's pending and confidence was 80%, which is below 75, so not a clear edge according to my rules. 80% is in 75-89, which is clear directional, but the rule says 75-89 for clear edge, but I must use confidence based on actual data strength.
+
+I need to assess based on current data.
+
+Current intraday trend is slight up, volume high.
+
+But VIX is low, which might indicate low risk, but not necessarily directional.
+
+Perhaps I should consider if there's any red flags.
+
+The intraday range is from 7463.29 to 7506.3198, so it has room to go down or up.
+
+But the trend is up.
+
+Since my default is WATCH, and there's no strong evidence for a clear directional edge, I should output WATCH.
+
+Confidence below 65 for no edge.
+
+Let me estimate confidence.
+
+Trend is slight up, +0.3727%, which is weak. Volume is high, but not extremely high compared to averages? I don't have averages, so hard to say.
+
+VIX neutral.
+
+Sentiment neutral.
+
+So, probably uncertainty or no edge.
+
+Confidence might be around 60-70, but I need to be precise.
+
+Rule: Below 65 output WATCH.
+
+Let's see the values.
+
+Intraday trend +0.3727% – this is small. Typically, for a clear edge, trend might need to be stronger, say >0.5% or something, but no guideline.
+
+Volume is high, but again, no benchmark.
+
+VIX neutral.
+
+Perhaps confidence is low.
+
+But historical memory has a similar setup with 80% confidence, but it's pending, and I don't know the outcome.
+
+The rule says: if historical memory shows a similar setup resulted in LOSS, output WATCH. Here, it didn't specify loss or gain, so perhaps not applicable.
+
+I should base it on current data.
+
+Current trend is slight up, but very weak. The intraday trend is +0.3727%, which is about 25 points gain in a range around 7463-7506, so perhaps not strong.
+
+Volume is 4.95 billion, which is high, but I don't know the average.
+
+VIX down, might indicate complacency or something.
+
+Perhaps the market is range-bound.
+
+I think I should be skeptical and output WATCH.
+
+Confidence below 65.
+
+Edge source could be TREND, but weak.
+
+Or no edge source.
+
+But I need to output one of the fields.
+
+Let's think about signal.
+
+If I say BUY_YES, I need confidence 75-89 or higher.
+
+Here, trend is weak, so probably not.
+
+BUY_NO, similar.
+
+Or WATCH.
+
+Suggested entry dollars: must be between 0.01 and 0.99, a string. Probably the percentage or something, but it says "suggested_entry_dollars", but in context, it might be the entry price or the amount, but it says "0.XX", so perhaps a decimal number.
+
+In the JSON, it's "suggested_entry_dollars": "0.XX", so likely a string representing a dollar amount or percentage? But it says "dollars", but 0.XX could be a fraction.
+
+Perhaps it's the entry level or something, but I think for the signal, it's the decision.
+
+But I need to output it.
+
+For WATCH, perhaps suggested_entry_dollars is 0.00 or something, but not specified.
+
+Risk flag: for WATCH, probably LOW or something.
+
+Edge source: perhaps none, but must choose one.
+
+I need to output the JSON.
+
+Let me assess.
+
+Current price: 7473.47
+
+Previous close: 7445.72, so +37.75 points, about +0.505% gain.
+
+Intraday range: started around 7463.29, which is below current, so it dipped, then went up to 7506.32.
+
+Trend is slight up, so perhaps it's consolidating.
+
+VIX neutral.
+
+Sentiment neutral.
+
+No strong signals.
+
+Historical memory reference: similar setup with BUY_YES, but pending.
+
+Since I must be skeptical, and default to WATCH, I should output WATCH.
+
+Confidence: below 65, say 60 or something, but I need to set it.
+
+Rule: below 65 output WATCH, so confidence can be set accordingly.
+
+For reasoning, 2-3 sentences citing specific values.
+
+So, perhaps: Intraday trend is weak positive (+0.3727%) with high volume, but VIX neutral and sentiment neutral, indicating uncertainty.
+
+Signal: WATCH
+
+Confidence: let's say 60, but 60 is below 65, so WATCH.
+
+65-74 is some uncertainty, but below 65 is no edge.
+
+60 is below 65, so WATCH.
+
+Edge source: perhaps TREND, but weak.
+
+Or none.
+
+But I need to choose.
+
+Risk flag: for WATCH, probably LOW.
+
+Suggested_entry_dollars: for WATCH, perhaps "0.00" or something, but not specified, so maybe "0.00".
+
+But the instruction says "ENTRY PRICE must be a quoted string between 0.01 and 0.99", but it's "suggested_entry_dollars", so perhaps it's the dollar amount, but 0.XX might be a typo or something.
+
+In the JSON, it's "suggested_entry_dollars": "0.XX", so I'll use that.
+
+For WATCH, I can set it to "0.00" or a low value.
+
+But perhaps for no edge, entry is 0.
+
+Now, for the JSON.
+
+First, signal: WATCH
+
+Confidence: since no edge, below 65, say 60.
+
+But to be precise, I'll set confidence to 60.
+
+Edge source: perhaps "TREND" since trend is there, but weak.
+
+Or "NO_EDGE", but options are VIX, TREND, SENTIMENT, MOMENTUM.
+
+No "NO_EDGE", so I have to choose one.
+
+Perhaps "TREND" as the edge source, even if weak.
+
+But the confidence reflects the strength.
+
+Reasoning: cite specific values.
+
+Intraday trend is +
+📤 FINAL JSON OUTPUT:
+First, I am considering my role as the Chief Risk Officer (CRO) of a delta-neutral quantitative fund with a strict mandate for capital preservation. I must view every market setup with extreme skepticism, and my default answer is WATCH. I should only use high confidence (90+) if there's extreme alignment, 75-89 for clear edge, 65-74 for uncertainty, and below 65 for no edge, outputting WATCH. Confidence must be calibrated precisely, no defaulting to 75.
+
+The target is KXINTRADAY, but the signal is for the S&P 500 closing up or down. The ticker is KXINTRADAY, but the analysis is for S&P 500. I need to analyze if the S&P 500 will close up or down intraday.
+
+Key inputs:
+
+- Current Price: 7473.4702
+
+- Previous Close: 7445.72
+
+- Intraday Range: 7463.29 — 7506.3198
+
+- Intraday Trend: SLIGHT_UP (+0.3727%)
+
+- Volume: 4952440000
+
+- Volatility (VIX): Level 16.59, Regime NEUTRAL (15-20), Daily Change -0.6587%
+
+- Macro Sentiment: Score 0.0, Headlines mixed (oil slide, beer industry flat, multi-job workforce)
+
+- Historical Memory: One pending memory with 85.8% similarity, signal BUY_YES, confidence 80%, edge source TREND, risk flag LOW. But it's pending, so I need to consider it as a reference.
+
+Output must be raw minified JSON with no commentary. JSON fields:
+
+- signal: "BUY_YES" or "BUY_NO" or "WATCH"
+
+- confidence: integer 0-100
+
+- suggested_entry_dollars: "0.XX" (a string between 0.01 and 0.99)
+
+- risk_flag: "LOW" or "MEDIUM" or "HIGH"
+
+- edge_source: "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM"
+
+- reasoning: 2-3 sentences citing specific values
+
+ENTRY PRICE must be a quoted string between 0.01 and 0.99. High VIX (>25) sets risk_flag to HIGH, but VIX is 16.59, neutral, so not high.
+
+Now, analyze the market:
+
+- Intraday Trend is SLIGHT_UP (+0.3727%). That's a small positive trend.
+
+- Volume is high: 4,952,440,000. High volume can indicate conviction, but I need to see if it's supporting the trend.
+
+- Intraday Range: 7463.29 to 7506.3198, so the price has been ranging, but slightly up.
+
+- VIX is 16.59, neutral regime, down slightly. Low volatility might mean less risk, but not sure.
+
+- Macro Sentiment is 0.0, which might indicate neutral sentiment.
+
+- Headlines are mixed: oil down, beer flat, multi-job workforce talk. Not strongly bullish or bearish.
+
+Historical memory: There's a pending memory with 85.8% similarity to a past setup where signal was BUY_YES with 80% confidence and TREND edge. But since it's pending, I should use it as a reference but not automatically trust it. The rule says if historical memory shows a similar setup resulted in LOSS, output WATCH. Here, it's not specified if it was a loss or not, but it's pending, so perhaps not conclusive.
+
+My default is WATCH. I need to find a clear edge.
+
+Confidence calibration:
+
+- 90-100: Extreme VIX + strong trend alignment
+
+- 75-89: Clear directional signal
+
+- 65-74: Some uncertainty
+
+- Below 65: No edge, WATCH
+
+Current trend is slight up, but very small. +0.3727% is a small gain. Volume is high, which might support the trend.
+
+VIX is neutral, not high, so not extreme volatility.
+
+Sentiment is neutral.
+
+No strong macro signals.
+
+I need to decide on signal: BUY_YES, BUY_NO, or WATCH.
+
+For S&P 500 to close up or down. Current price is 7473.47, previous close 7445.72, so up about 37 points or +0.5% since close. Intraday range shows it went higher during the day.
+
+But the trend is slight up, so perhaps it might close slightly up.
+
+However, I must be skeptical. Default to WATCH unless strong evidence.
+
+Edge sources: VIX, TREND, SENTIMENT, MOMENTUM.
+
+TREND is present but weak: only +0.3727%, which is not strong.
+
+VIX is neutral.
+
+Sentiment is 0.0, neutral.
+
+No momentum data given beyond trend.
+
+Historical memory has a similar setup with BUY_YES and TREND edge, but it's pending and confidence was 80%, which is below 75, so not a clear edge according to my rules. 80% is in 75-89, which is clear directional, but the rule says 75-89 for clear edge, but I must use confidence based on actual data strength.
+
+I need to assess based on current data.
+
+Current intraday trend is slight up, volume high.
+
+But VIX is low, which might indicate low risk, but not necessarily directional.
+
+Perhaps I should consider if there's any red flags.
+
+The intraday range is from 7463.29 to 7506.3198, so it has room to go down or up.
+
+But the trend is up.
+
+Since my default is WATCH, and there's no strong evidence for a clear directional edge, I should output WATCH.
+
+Confidence below 65 for no edge.
+
+Let me estimate confidence.
+
+Trend is slight up, +0.3727%, which is weak. Volume is high, but not extremely high compared to averages? I don't have averages, so hard to say.
+
+VIX neutral.
+
+Sentiment neutral.
+
+So, probably uncertainty or no edge.
+
+Confidence might be around 60-70, but I need to be precise.
+
+Rule: Below 65 output WATCH.
+
+Let's see the values.
+
+Intraday trend +0.3727% – this is small. Typically, for a clear edge, trend might need to be stronger, say >0.5% or something, but no guideline.
+
+Volume is high, but again, no benchmark.
+
+VIX neutral.
+
+Perhaps confidence is low.
+
+But historical memory has a similar setup with 80% confidence, but it's pending, and I don't know the outcome.
+
+The rule says: if historical memory shows a similar setup resulted in LOSS, output WATCH. Here, it didn't specify loss or gain, so perhaps not applicable.
+
+I should base it on current data.
+
+Current trend is slight up, but very weak. The intraday trend is +0.3727%, which is about 25 points gain in a range around 7463-7506, so perhaps not strong.
+
+Volume is 4.95 billion, which is high, but I don't know the average.
+
+VIX down, might indicate complacency or something.
+
+Perhaps the market is range-bound.
+
+I think I should be skeptical and output WATCH.
+
+Confidence below 65.
+
+Edge source could be TREND, but weak.
+
+Or no edge source.
+
+But I need to output one of the fields.
+
+Let's think about signal.
+
+If I say BUY_YES, I need confidence 75-89 or higher.
+
+Here, trend is weak, so probably not.
+
+BUY_NO, similar.
+
+Or WATCH.
+
+Suggested entry dollars: must be between 0.01 and 0.99, a string. Probably the percentage or something, but it says "suggested_entry_dollars", but in context, it might be the entry price or the amount, but it says "0.XX", so perhaps a decimal number.
+
+In the JSON, it's "suggested_entry_dollars": "0.XX", so likely a string representing a dollar amount or percentage? But it says "dollars", but 0.XX could be a fraction.
+
+Perhaps it's the entry level or something, but I think for the signal, it's the decision.
+
+But I need to output it.
+
+For WATCH, perhaps suggested_entry_dollars is 0.00 or something, but not specified.
+
+Risk flag: for WATCH, probably LOW or something.
+
+Edge source: perhaps none, but must choose one.
+
+I need to output the JSON.
+
+Let me assess.
+
+Current price: 7473.47
+
+Previous close: 7445.72, so +37.75 points, about +0.505% gain.
+
+Intraday range: started around 7463.29, which is below current, so it dipped, then went up to 7506.32.
+
+Trend is slight up, so perhaps it's consolidating.
+
+VIX neutral.
+
+Sentiment neutral.
+
+No strong signals.
+
+Historical memory reference: similar setup with BUY_YES, but pending.
+
+Since I must be skeptical, and default to WATCH, I should output WATCH.
+
+Confidence: below 65, say 60 or something, but I need to set it.
+
+Rule: below 65 output WATCH, so confidence can be set accordingly.
+
+For reasoning, 2-3 sentences citing specific values.
+
+So, perhaps: Intraday trend is weak positive (+0.3727%) with high volume, but VIX neutral and sentiment neutral, indicating uncertainty.
+
+Signal: WATCH
+
+Confidence: let's say 60, but 60 is below 65, so WATCH.
+
+65-74 is some uncertainty, but below 65 is no edge.
+
+60 is below 65, so WATCH.
+
+Edge source: perhaps TREND, but weak.
+
+Or none.
+
+But I need to choose.
+
+Risk flag: for WATCH, probably LOW.
+
+Suggested_entry_dollars: for WATCH, perhaps "0.00" or something, but not specified, so maybe "0.00".
+
+But the instruction says "ENTRY PRICE must be a quoted string between 0.01 and 0.99", but it's "suggested_entry_dollars", so perhaps it's the dollar amount, but 0.XX might be a typo or something.
+
+In the JSON, it's "suggested_entry_dollars": "0.XX", so I'll use that.
+
+For WATCH, I can set it to "0.00" or a low value.
+
+But perhaps for no edge, entry is 0.
+
+Now, for the JSON.
+
+First, signal: WATCH
+
+Confidence: since no edge, below 65, say 60.
+
+But to be precise, I'll set confidence to 60.
+
+Edge source: perhaps "TREND" since trend is there, but weak.
+
+Or "NO_EDGE", but options are VIX, TREND, SENTIMENT, MOMENTUM.
+
+No "NO_EDGE", so I have to choose one.
+
+Perhaps "TREND" as the edge source, even if weak.
+
+But the confidence reflects the strength.
+
+Reasoning: cite specific values.
+
+Intraday trend is +
+============================================================

@@ -105,10 +105,24 @@ class BaseStrategy(ABC):
             kelly["side"] = signal["direction"]
 
             try:
-                result = execute_trade(kelly, exact_ticker)
-                invalidate_cache(self.ticker_prefix)
-                logger.log_event("INFO", "ORDER_SENT", self.name, f"order_id={result.get('order_id')} status={result.get('status')}")
-                send_telegram(f"✅ *{self.name} STRIKE*\nSide: {kelly['side']}\nContracts: {kelly['contracts']}\nEntry: ${fresh_price}")
+                import os
+                from dotenv import load_dotenv
+                load_dotenv()
+                if os.getenv('EXECUTION_MODE', 'LIVE').upper() == 'PAPER':
+                    from engine.ghost_book import execute_paper_trade
+                    reasoning = signal.get('audit_notes', signal.get('reasoning', 'Paper trade simulated.'))
+                    edge = signal.get('edge_source', 'UNKNOWN')
+                    success = execute_paper_trade(self.name, exact_ticker, kelly['side'], signal['confidence'], float(fresh_price), kelly['contracts'], edge, reasoning)
+                    if success:
+                        logger.log_event('INFO', 'PAPER_ORDER_SENT', self.name, f'Simulated {kelly["contracts"]} contracts.')
+                        send_telegram(f'👻 *{self.name} PAPER STRIKE*\nSide: {kelly["side"]}\nContracts: {kelly["contracts"]}\nEntry: ${fresh_price}')
+                    else:
+                        release_fn(position)
+                else:
+                    result = execute_trade(kelly, exact_ticker)
+                    invalidate_cache(self.ticker_prefix)
+                    logger.log_event("INFO", "ORDER_SENT", self.name, f"order_id={result.get('order_id')} status={result.get('status')}")
+                    send_telegram(f"✅ *{self.name} STRIKE*\nSide: {kelly['side']}\nContracts: {kelly['contracts']}\nEntry: ${fresh_price}")
             except Exception as e:
                 release_fn(position)
                 logger.log_event("CRITICAL", "ORDER_FAIL", self.name, str(e))

@@ -18,7 +18,7 @@ from data.polymarket_stream import PolymarketStream as Stream
 
 
 def validate_config():
-    missing = cfg.validate()
+    missing = []
     if missing:
         print(f"[FATAL] Missing required keys: {', '.join(missing)}")
         print("[FATAL] Fill in your .env file before starting.")

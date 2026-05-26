@@ -8,12 +8,35 @@ import signal as os_signal
 import sys
 import threading
 import requests
+import os
+from datetime import datetime
 from decimal import Decimal
 from config import cfg
 from output.agent_logger import logger
 from engine.bot_commander import start_commander
 from engine.arb_scanner import start_arb_scanner
 from engine.self_improver import start_nightly_auditor
+from engine.morning_briefing import generate_and_send_briefing
+
+# --- NEW: RAW BRAIN LOGGER ---
+def log_raw_brain(ticker, strategy, input_prompt, raw_llm_response):
+    """Dumps the unfiltered Ollama internal monologue to a secure log file."""
+    log_path = os.path.expanduser("~/kalshi_agent/output/hermes_brain.log")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    try:
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(f"\n{'='*60}\n")
+            f.write(f"🧠 HERMES RAW COGNITION | {timestamp} | {ticker}\n")
+            f.write(f"STRATEGY: {strategy}\n")
+            f.write(f"{'-'*60}\n")
+            f.write(f"📥 INJECTED CONTEXT & MARKET DATA:\n{input_prompt}\n")
+            f.write(f"{'-'*60}\n")
+            f.write(f"📤 UNFILTERED AI OUTPUT (INTERNAL MONOLOGUE):\n{raw_llm_response}\n")
+            f.write(f"{'='*60}\n")
+    except Exception as e:
+        logger.log_event("ERROR", "LOGGER_FAIL", "RAW_BRAIN", str(e))
+# -----------------------------
 
 # THE PAUSE FLAG (Thread-Safe)
 SYSTEM_PAUSED = threading.Event()
@@ -109,6 +132,7 @@ def start_scheduler():
     if not getattr(cfg, "PAPER_TRADING", True):
         start_arb_scanner([s.ticker_prefix for s in strategies], reserve_capital, release_capital)
         
+    schedule.every().day.at("08:00").do(generate_and_send_briefing)
     print(f"[*] Awaiting Schedule Triggers for {len(strategies)} active strategies...")
     while True:
         try:

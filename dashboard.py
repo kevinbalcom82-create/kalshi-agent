@@ -45,3 +45,52 @@ with col2:
 # Auto-refresh button
 if st.button("🔄 Refresh Data"):
     st.rerun()
+
+# --- GHOST BOOK INJECTION ---
+import pandas as pd
+import sqlite3
+try:
+    from config import cfg
+except ImportError:
+    pass
+
+st.markdown('---')
+st.subheader('👻 Ghost Book (Paper Trading Ledger)')
+try:
+    conn = sqlite3.connect(cfg.DB_PATH)
+    df_paper = pd.read_sql_query('SELECT timestamp, ticker, signal, confidence, outcome, simulated_contracts, reasoning FROM paper_trades ORDER BY timestamp DESC LIMIT 50', conn)
+    conn.close()
+    if not df_paper.empty:
+        st.dataframe(df_paper, use_container_width=True)
+    else:
+        st.info('The Ghost Book is currently empty. Engine is idling and waiting for setups.')
+except Exception as e:
+    st.error(f'Could not load Ghost Book data: {e}')
+# --- GHOST BOOK INJECTION ---
+import pandas as pd
+import sqlite3
+import os
+import streamlit as st
+
+st.markdown("---")
+st.subheader("👻 Ghost Book (Paper Trading Ledger)")
+
+try:
+    # Point directly to the Ghost Book database
+    db_path = os.path.expanduser("~/kalshi_agent/output/ghost_book.db")
+    
+    conn = sqlite3.connect(db_path)
+    df_paper = pd.read_sql_query(
+        "SELECT timestamp, ticker, signal, confidence, outcome, simulated_entry_price, reasoning FROM paper_trades ORDER BY timestamp DESC LIMIT 50", 
+        conn
+    )
+    conn.close()
+
+    if not df_paper.empty:
+        # Display the dataframe taking up the full width of your UI
+        st.dataframe(df_paper, use_container_width=True)
+    else:
+        st.info("The Ghost Book is currently empty. The engine is idling and waiting for setups.")
+
+except Exception as e:
+    st.error(f"Could not load Ghost Book data: {e}")
