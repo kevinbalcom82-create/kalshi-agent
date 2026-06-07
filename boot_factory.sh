@@ -1,10 +1,17 @@
 #!/bin/bash
-echo "⚡ Powering up Suncoast Agent Factory (Optimized)..."
+echo "⚡ Powering up Suncoast Agent Factory..."
+
+# DNS safety net — ensure Cloudflare DNS is set before anything starts
+networksetup -setdnsservers Wi-Fi 1.1.1.1 8.8.8.8 2>/dev/null || true
+
+# Clear stale ChromaDB embeddings on boot to prevent collection conflicts
+rm -rf /Users/npcforge/kalshi_agent/output/chromadb
+echo "🧹 ChromaDB cache cleared."
 
 # AI Brain (Ollama) - FORCED AGGRESSIVE MEMORY FLUSH (15 seconds)
 tmux new-session -d -s ai_brain "OLLAMA_KEEP_ALIVE=15s ollama serve"
 
-# PIXEL Ingest Engine (THE BRAIN)
+# PIXEL Ingest Engine
 tmux new-session -d -s ingest "source .venv/bin/activate && python3 pixel_ingest.py"
 
 # Private UI Dashboard (Port 8501)
@@ -23,3 +30,4 @@ tmux new-session -d -s engine "source .venv/bin/activate && while true; do pytho
 tmux new-session -d -s tunnel "cloudflared --config /Users/npcforge/.cloudflared/config.yml tunnel run ai-funnel"
 
 echo "✅ All 7 microservices are ONLINE."
+echo "📡 Sovereign Bridge managed separately by launchd."

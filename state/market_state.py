@@ -18,12 +18,20 @@ class MarketState:
         self.last_update = datetime.utcnow()
         self.snapshot_loaded = False
         self._lock = threading.Lock()
+        # OBI: full book depth stored for OrderBookAnalyzer
+        self.yes_levels = []   # list of (price, size) tuples — bid side
+        self.no_levels  = []   # list of (price, size) tuples — ask side
 
     def apply_snapshot(self, data: dict):
-        """Marks the book as initialized when the snapshot arrives."""
+        """Marks the book as initialized and stores full depth for OBI."""
         with self._lock:
             self.snapshot_loaded = True
             self.last_update = datetime.utcnow()
+            # Store full depth levels for OBI calculation
+            yes_raw = data.get("yes_dollars_fp", [])
+            no_raw  = data.get("no_dollars_fp", [])
+            self.yes_levels = [(p, s) for p, s in yes_raw] if yes_raw else []
+            self.no_levels  = [(p, s) for p, s in no_raw]  if no_raw  else []
 
     def apply_ticker(self, data: dict):
         """Safely updates price action using Decimal enforcement."""
@@ -40,10 +48,10 @@ class MarketState:
         """Returns the current market state for the context builder."""
         with self._lock:
             return {
-                "ticker": self.ticker,
-                "yes_bid": str(self.yes_bid),
-                "yes_ask": str(self.yes_ask),
-                "price": str(self.price),
+                "ticker":      self.ticker,
+                "yes_bid":     str(self.yes_bid),
+                "yes_ask":     str(self.yes_ask),
+                "price":       str(self.price),
                 "last_update": self.last_update.isoformat()
             }
 
@@ -66,9 +74,9 @@ class StateManager:
             return {
                 "orderbooks": {
                     ticker: {
-                        "yes_bid": str(market.yes_bid),
-                        "yes_ask": str(market.yes_ask),
-                        "price": str(market.price),
+                        "yes_bid":     str(market.yes_bid),
+                        "yes_ask":     str(market.yes_ask),
+                        "price":       str(market.price),
                         "last_update": market.last_update.isoformat()
                     }
                     for ticker, market in self.markets.items()

@@ -7,6 +7,7 @@ Snipes the S&P 500 daily close at 15:30 ET using yfinance and VIX data.
 import os
 import datetime
 from strategies.base_strategy import BaseStrategy
+from engine.vrp_analyzer import vrp_analyzer
 
 class DailyEquitiesHunter(BaseStrategy):
     @property
@@ -26,18 +27,18 @@ class DailyEquitiesHunter(BaseStrategy):
     def is_active_today(self) -> bool:
         if os.getenv("EQUITIES_ACTIVE", "true").lower() == "false":
             return False
-            
+
         today = datetime.date.today()
         if today.weekday() >= 5:
             return False
-            
+
         try:
             from data.fed_client import fed_client
             if fed_client.get_fed_context().get("is_fomc_today"):
                 return False
         except Exception:
-            pass 
-            
+            pass
+
         return True
 
     def build_context(self) -> dict:
@@ -50,6 +51,16 @@ class DailyEquitiesHunter(BaseStrategy):
         vix        = market_ctx.get("vix", {})
         news_data  = rss_client.get_sentiment("CPI")
 
+        # Fetch SPX price history for VRP realized vol calculation
+        spx_history_prices = []
+        try:
+            import yfinance as yf
+            spx_raw = yf.Ticker("^GSPC").history(period="25d")
+            spx_history_prices = list(reversed(spx_raw["Close"].tolist()))
+        except Exception:
+            pass  # VRP block skipped gracefully if this fails
+
+        # VIX regime classification
         try:
             vix_price = Decimal(str(vix.get("price", "20")))
             if vix_price > Decimal("30"):
@@ -63,18 +74,18 @@ class DailyEquitiesHunter(BaseStrategy):
         except Exception:
             vix_regime = "UNKNOWN"
 
+        # SPX trend classification
         try:
             pct = Decimal(str(spx.get("pct_change", "0")))
             spx_trend = (
-                f"STRONG_UP (+{pct}%)" if pct > Decimal("0.5") else
-                f"SLIGHT_UP (+{pct}%)" if pct > Decimal("0") else
-                f"SLIGHT_DOWN ({pct}%)" if pct > Decimal("-0.5") else
+                f"STRONG_UP (+{pct}%)"   if pct > Decimal("0.5")  else
+                f"SLIGHT_UP (+{pct}%)"   if pct > Decimal("0")    else
+                f"SLIGHT_DOWN ({pct}%)"  if pct > Decimal("-0.5") else
                 f"STRONG_DOWN ({pct}%)"
             )
         except Exception:
             spx_trend = "UNKNOWN"
 
-        # --- THE RUTHLESS QUANT PROMPT UPGRADE ---
         prompt_sections = [
             "You are the execution brain of a sovereign quantitative trading fund. "
             "Your mandate is ABSOLUTE CAPITAL PRESERVATION. You do not gamble. You do not guess.\n"
@@ -98,6 +109,7 @@ class DailyEquitiesHunter(BaseStrategy):
             f"VIX Daily Change: {vix.get('pct_change')}%",
         ]
 
+        # Macro sentiment block
         if news_data and news_data.get("headlines"):
             headlines = " | ".join(news_data.get("headlines", [])[:3])
             prompt_sections.append(
@@ -105,6 +117,11 @@ class DailyEquitiesHunter(BaseStrategy):
                 f"Sentiment Score: {news_data.get('sentiment_score')}\n"
                 f"Headlines: {headlines}"
             )
+
+        # VRP block — Volatility Risk Premium structural edge
+        vrp_block = vrp_analyzer.build_prompt_block(vix, spx_history_prices)
+        if vrp_block:
+            prompt_sections.append(vrp_block)
 
         prompt_sections.append(
             "## REQUIRED OUTPUT\n"
@@ -114,13 +131,14 @@ class DailyEquitiesHunter(BaseStrategy):
             '  "confidence": integer 0-100,\n'
             '  "suggested_entry_dollars": "0.XX",\n'
             '  "risk_flag": "LOW" or "MEDIUM" or "HIGH",\n'
-            '  "edge_source": "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM" or "NONE",\n'
+            '  "edge_source": "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM" or "VRP" or "NONE",\n'
             '  "reasoning": "2-3 sentences. If WATCH, explain why the edge is insufficient."\n'
             "}\n"
             "RULES:\n"
             "1. If confidence < 85, signal MUST be WATCH.\n"
             "2. If VIX is EXTREME_FEAR, risk_flag MUST be HIGH.\n"
-            "3. ENTRY PRICE must be a string like '0.55'. Never exceed '0.85'."
+            "3. ENTRY PRICE must be a string like '0.55'. Never exceed '0.85'.\n"
+            "4. VRP is a confidence MODIFIER only — do not override macro signal direction with it."
         )
 
         return {

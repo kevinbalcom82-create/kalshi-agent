@@ -14,12 +14,13 @@ try:
     from data.fred_client import fred_client
     from data.bls_client import bls_client
     from data.rss_client import rss_client
+    from engine.orderbook_imbalance import obi_analyzer
 except ImportError as e:
     print(f"[!] Import error in context_builder: {e}")
 
 def build_context(ticker: str = None) -> dict:
     """
-    Assembles the complete state of the market and returns the 
+    Assembles the complete state of the market and returns the
     fully formatted prompt ready for the local Ollama signal engine.
     """
     ticker = ticker or cfg.TARGET_TICKER
@@ -28,8 +29,9 @@ def build_context(ticker: str = None) -> dict:
         return {}
 
     # 1. Fetch Local State (Kalshi/Polymarket)
-    snapshot = state_manager.get_or_create(ticker).get_snapshot_dict()
-    
+    kalshi_state = state_manager.get_or_create(ticker)
+    snapshot = kalshi_state.get_snapshot_dict()
+
     # 2. Extract Pricing Safely (Decimal Enforcement)
     try:
         kalshi_ask = Decimal(str(snapshot.get("yes_ask") or "0"))
@@ -47,10 +49,10 @@ def build_context(ticker: str = None) -> dict:
         implied_prob = int(((kalshi_bid + kalshi_ask) / Decimal("2")) * Decimal("100"))
     else:
         implied_prob = 0
-    
+
     # 3. Fetch Layer 1 External Data
     fred_data = fred_client.get_series("CPIAUCSL", limit=6) if 'fred_client' in globals() else []
-    bls_data = bls_client.get_series("CUSR0000SA0", limit=6) if 'bls_client' in globals() else []
+    bls_data  = bls_client.get_series("CUSR0000SA0", limit=6) if 'bls_client' in globals() else []
     news_data = rss_client.get_sentiment(ticker) if 'rss_client' in globals() else {"headlines": [], "sentiment_score": "NEUTRAL"}
 
     # 4. Calculate Divergence Flag
@@ -74,12 +76,11 @@ def build_context(ticker: str = None) -> dict:
     ]
     if fred_data:
         latest = fred_data[0].get("value", "Unknown")
-        prior = fred_data[1].get("value", "Unknown") if len(fred_data) > 1 else "Unknown"
+        prior  = fred_data[1].get("value", "Unknown") if len(fred_data) > 1 else "Unknown"
         event_lines.append(f"FRED Latest: {latest} (TE unavailable)")
         event_lines.append(f"FRED Prior: {prior}")
         history_str = ", ".join([f"{d.get('date', 'Unknown')}: {d.get('value', '0')}" for d in fred_data])
         event_lines.append(f"Historical Actuals: {history_str}")
-    
     prompt_sections.append("\n".join(event_lines))
 
     # Kalshi Block
@@ -92,9 +93,20 @@ def build_context(ticker: str = None) -> dict:
     ]
     prompt_sections.append("\n".join(kalshi_lines))
 
+    # OBI Block — Order Book Imbalance
+    try:
+        obi_block = obi_analyzer.build_prompt_block(
+            kalshi_state.yes_levels,
+            kalshi_state.no_levels
+        )
+        if obi_block:
+            prompt_sections.append(obi_block)
+    except Exception as e:
+        logger.log_event("WARNING", "OBI_FAIL", ticker, str(e))
+
     # BLS Block
     if bls_data:
-        bls_str = ", ".join([f"{d.get('period', 'Unknown')}: {d.get('value', '0')}" for d in bls_data])
+        bls_str   = ", ".join([f"{d.get('period', 'Unknown')}: {d.get('value', '0')}" for d in bls_data])
         bls_lines = [
             "## BLS SETTLEMENT DATA",
             f"Recent Source Data: {bls_str}",
@@ -102,7 +114,7 @@ def build_context(ticker: str = None) -> dict:
         ]
         prompt_sections.append("\n".join(bls_lines))
 
-    # Sentiment Block (NEW)
+    # Sentiment Block
     if news_data and news_data.get("headlines"):
         headlines_str = " | ".join(news_data.get("headlines", []))
         news_lines = [
@@ -112,7 +124,7 @@ def build_context(ticker: str = None) -> dict:
         ]
         prompt_sections.append("\n".join(news_lines))
 
-    # Output Block - Added SENTIMENT to edge_source
+    # Output Block
     output_format = """## OUTPUT
 Respond ONLY with valid JSON — no preamble, no markdown. Follow these STRICT reasoning rules:
 - REQUIRED: You MUST cite the specific MoM change value or trend in exact numbers (e.g., '+0.147 points').
@@ -124,7 +136,7 @@ Respond ONLY with valid JSON — no preamble, no markdown. Follow these STRICT r
   "confidence": 0-100,
   "suggested_entry_dollars": "0.XX",
   "risk_flag": "LOW" | "MEDIUM" | "HIGH",
-  "edge_source": "FRED" | "BLS" | "ORDERBOOK" | "SENTIMENT",
+  "edge_source": "FRED" | "BLS" | "ORDERBOOK" | "SENTIMENT" | "OBI",
   "reasoning": "Strictly quantitative reasoning comparing exact data points to exact market prices."
 }"""
     prompt_sections.append(output_format)
@@ -134,16 +146,16 @@ Respond ONLY with valid JSON — no preamble, no markdown. Follow these STRICT r
 
     # 6. Return strict dictionary shape
     return {
-        "ticker": ticker,
-        "event_name": ticker,
-        "release_ts": "Pending (Auto-Rollover)",
-        "fred_history": fred_data,
-        "bls_history": bls_data,
+        "ticker":          ticker,
+        "event_name":      ticker,
+        "release_ts":      "Pending (Auto-Rollover)",
+        "fred_history":    fred_data,
+        "bls_history":     bls_data,
         "kalshi_snapshot": snapshot,
-        "metaculus": {},
-        "news": news_data,
+        "metaculus":       {},
+        "news":            news_data,
         "divergence_flag": divergence_flag,
-        "prompt": final_prompt
+        "prompt":          final_prompt
     }
 
 if __name__ == "__main__":

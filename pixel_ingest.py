@@ -48,6 +48,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- OpenAI-compatible probe endpoint (silences /v1/models 404 flood) ---
+@app.get("/v1/models")
+def list_models():
+    return {"object": "list", "data": [{"id": "pixel-gateway", "object": "model", "owned_by": "suncoast"}]}
+
 # ==========================================
 # 🗄️ DATABASE SETUP
 # ==========================================
@@ -335,7 +340,7 @@ def stripe_webhook(payload: dict):
 def query_memory_bank(payload: MemoryQuery, api_key: str = Depends(verify_api_key)):
     print(f"{C.CYAN}[CRO] 🧠 Synthesizing memory query: {payload.question}{C.END}")
     try:
-        ghost_path = os.path.expanduser("~/kalshi_agent/output/ghost_book.db")
+        from config import cfg; ghost_path = cfg.DB_PATH
         conn = sqlite3.connect(ghost_path, timeout=5)
         cursor = conn.execute("SELECT timestamp, ticker, signal, confidence, reasoning FROM paper_trades ORDER BY timestamp DESC LIMIT 20")
         rows = cursor.fetchall()
