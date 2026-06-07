@@ -5,6 +5,7 @@ from typing import Optional
 try:
     import chromadb
     from chromadb.config import Settings
+    from chromadb.utils import embedding_functions
     CHROMA_AVAILABLE = True
 except ImportError:
     CHROMA_AVAILABLE = False
@@ -18,7 +19,7 @@ except ImportError:
 
 _client = None
 _client_lock = threading.Lock()
-CHROMA_PATH = "output/chromadb" # Updated path to stay inside your current directory structure safely
+CHROMA_PATH = "output/chromadb"
 
 def _get_client():
     global _client
@@ -37,8 +38,19 @@ def _get_client():
 def _get_collection(strategy_name: str):
     client = _get_client()
     if not client: return None
+    
+    # 🧠 The Fix: Force ChromaDB to use the lightweight local Ollama embedding model
+    ollama_ef = embedding_functions.OllamaEmbeddingFunction(
+        url="http://localhost:11434/api/embeddings",
+        model_name="nomic-embed-text",
+    )
+    
     try:
-        return client.get_or_create_collection(name=f"strategy_{strategy_name.lower().replace(' ', '_')}", metadata={"hnsw:space": "cosine"})
+        return client.get_or_create_collection(
+            name=f"strategy_{strategy_name.lower().replace(' ', '_')}", 
+            metadata={"hnsw:space": "cosine"},
+            embedding_function=ollama_ef
+        )
     except Exception as e:
         logger.log_event("ERROR", "MEMORY_COLLECTION_FAIL", strategy_name, str(e))
         return None
@@ -75,7 +87,13 @@ def recall_memory(strategy_name: str, current_context: dict, n_results: int = 3,
         if outcome_filter: query_kwargs["where"] = {"outcome": outcome_filter}
         results = collection.query(**query_kwargs)
         memories = []
-        for doc, meta, dist in zip(results.get("documents", [[]])[0], results.get("metadatas", [[]])[0], results.get("distances", [[]])[0]):
+        documents = results.get("documents") or []
+        metadatas = results.get("metadatas") or []
+        distances = results.get("distances") or []
+        if not documents or not metadatas or not distances:
+            logger.log_event("INFO", "MEMORY_RECALL", strategy_name, "No matches")
+            return []
+        for doc, meta, dist in zip(documents[0], metadatas[0], distances[0]):
             similarity = round((1 - (dist / 2)) * 100, 1)
             memories.append({"reasoning": doc, "outcome": meta.get("outcome", "UNKNOWN"), "confidence": meta.get("confidence", 0), "settled_value": meta.get("settled_value", ""), "edge_source": meta.get("edge_source", ""), "risk_flag": meta.get("risk_flag", ""), "timestamp": meta.get("timestamp", ""), "similarity_pct": similarity})
         logger.log_event("INFO", "MEMORY_RECALL", strategy_name, f"Found {len(memories)} similar setups" if memories else "No matches")
@@ -86,7 +104,7 @@ def recall_memory(strategy_name: str, current_context: dict, n_results: int = 3,
 
 def format_memories_for_prompt(memories: list[dict]) -> str:
     if not memories: return ""
-    lines = ["## HISTORICAL MEMORY (Similar Past Setups)\n", "Study these past setups carefully. Avoid repeating strategies that led to LOSS outcomes.\n"]
+    lines = ["## HISTORICAL MEMORY (Similar Past Past Setups)\n", "Study these past setups carefully. Avoid repeating strategies that led to LOSS outcomes.\n"]
     for i, mem in enumerate(memories, 1):
         outcome_emoji = "✅" if mem["outcome"] == "WIN" else "❌" if mem["outcome"] == "LOSS" else "⏳"
         lines.append(f"Memory {i} ({mem['similarity_pct']}% similar) {outcome_emoji} {mem['outcome']}\n  Context: {mem['reasoning'][:200]}\n  Settled: {mem['settled_value']} | Confidence was: {mem['confidence']}% | Edge: {mem['edge_source']}\n")

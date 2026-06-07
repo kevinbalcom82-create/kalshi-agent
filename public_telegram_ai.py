@@ -9,6 +9,8 @@ import re
 
 import os
 
+import json
+
 
 
 # --- CONFIGURATION ---
@@ -19,7 +21,13 @@ bot = telebot.TeleBot(TOKEN)
 
 
 
-# --- STATE MANAGEMENT (UPGRADES 1 & 3) ---
+# --- SECURITY ---
+
+ADMIN_ID = 8624674587
+
+
+
+# --- STATE MANAGEMENT ---
 
 user_memory = {}
 
@@ -37,10 +45,6 @@ def ask_hermes(user_id, user_message):
 
     url = "http://127.0.0.1:11434/api/chat"
 
-    
-
-    # The New Closer Prompt
-
     system_prompt = {
 
         "role": "system", 
@@ -51,21 +55,13 @@ def ask_hermes(user_id, user_message):
 
     
 
-    # Memory Management (Initialize if new user)
-
     if user_id not in user_memory:
 
         user_memory[user_id] = []
 
         
 
-    # Append the new user message
-
     user_memory[user_id].append({"role": "user", "content": user_message})
-
-    
-
-    # Keep only the last 6 interactions to prevent memory overflow
 
     if len(user_memory[user_id]) > 6:
 
@@ -74,8 +70,6 @@ def ask_hermes(user_id, user_message):
         
 
     api_messages = [system_prompt] + user_memory[user_id]
-
-    
 
     payload = {"model": "hermes3:8b", "messages": api_messages, "stream": False}
 
@@ -89,10 +83,6 @@ def ask_hermes(user_id, user_message):
 
         bot_reply = response.json()["message"]["content"]
 
-        
-
-        # Save the AI's reply to memory so it remembers what it said
-
         user_memory[user_id].append({"role": "assistant", "content": bot_reply})
 
         return bot_reply
@@ -103,7 +93,117 @@ def ask_hermes(user_id, user_message):
 
 
 
-# --- TELEGRAM LISTENERS ---
+# ==========================================
+
+#      COMMAND & CONTROL (ADMIN ONLY)
+
+# ==========================================
+
+def is_admin(message):
+
+    return message.from_user.id == ADMIN_ID
+
+
+
+@bot.message_handler(commands=['status'])
+
+def send_status(message):
+
+    if not is_admin(message): return
+
+    bot.reply_to(message, "🟢 **System Status: ONLINE**\nSniper Engine is armed and awaiting triggers.", parse_mode="Markdown")
+
+
+
+@bot.message_handler(commands=['balance'])
+
+def send_balance(message):
+
+    if not is_admin(message): return
+
+    bot.reply_to(message, "⏳ Querying Kalshi API for wallet balance...\n*(API logic pending integration)*")
+
+
+
+@bot.message_handler(commands=['positions'])
+
+def send_positions(message):
+
+    if not is_admin(message): return
+
+    bot.reply_to(message, "📡 Fetching open Kalshi contracts...\n*(API logic pending integration)*")
+
+
+
+@bot.message_handler(commands=['logs'])
+
+def send_logs(message):
+
+    if not is_admin(message): return
+
+    try:
+
+        log_path = os.path.expanduser("~/kalshi_agent/output/engine.log")
+
+        if not os.path.exists(log_path):
+
+            # Fallback to the brain log if engine log isn't generated yet
+
+            log_path = os.path.expanduser("~/kalshi_agent/output/hermes_brain.log")
+
+            
+
+        with open(log_path, "r", encoding="utf-8") as file:
+
+            lines = file.readlines()[-15:]
+
+            log_text = "".join(lines)
+
+        bot.reply_to(message, f"🖥️ **Latest Logs:**\n```text\n{log_text}\n```", parse_mode="Markdown")
+
+    except Exception as e:
+
+        bot.reply_to(message, f"⚠️ Error reading logs: {e}")
+
+
+
+@bot.message_handler(commands=['halt'])
+
+def halt_execution(message):
+
+    if not is_admin(message): return
+
+    config_path = os.path.expanduser("~/kalshi_agent/engine_state.json")
+
+    with open(config_path, "w") as f:
+
+        json.dump({"status": "halted"}, f)
+
+    bot.reply_to(message, "🛑 **EMERGENCY HALT EXECUTED.**\nSniper is locked. No new orders will be fired.", parse_mode="Markdown")
+
+
+
+@bot.message_handler(commands=['resume'])
+
+def resume_execution(message):
+
+    if not is_admin(message): return
+
+    config_path = os.path.expanduser("~/kalshi_agent/engine_state.json")
+
+    with open(config_path, "w") as f:
+
+        json.dump({"status": "active"}, f)
+
+    bot.reply_to(message, "🟢 **SYSTEM RESUMED.**\nSniper is armed and listening for triggers.", parse_mode="Markdown")
+
+
+
+# ==========================================
+
+#     PUBLIC ROUTING & LEAD CAPTURE
+
+# ==========================================
 
 @bot.message_handler(commands=['start', 'help'])
 
@@ -125,15 +225,13 @@ def handle_message(message):
 
     
 
-    # --- UPGRADE 3: ANTI-SPAM ARMOR ---
+    # --- ANTI-SPAM ARMOR ---
 
     if uid not in user_spam_tracker:
 
         user_spam_tracker[uid] = []
 
         
-
-    # Clear old timestamps outside the 10-second window
 
     user_spam_tracker[uid] = [t for t in user_spam_tracker[uid] if now - t < RATE_LIMIT_WINDOW]
 
@@ -151,7 +249,7 @@ def handle_message(message):
 
 
 
-    # --- UPGRADE 2: INLINE LEAD CAPTURE ---
+    # --- INLINE LEAD CAPTURE ---
 
     text = message.text
 
@@ -163,15 +261,13 @@ def handle_message(message):
 
         extracted_email = email_match.group(0)
 
-        # Log to a local file on the Mac Mini
-
         with open("leads.txt", "a") as f:
 
             f.write(f"Lead Captured | User: {message.from_user.username} | Email: {extracted_email}\n")
 
         
 
-        bot.reply_to(message, f"✅ Lead secured. I have routed `{extracted_email}` to our backend triage system. The Sovereign team will be in touch shortly.")
+        bot.reply_to(message, f"✅ Lead secured. I have routed `{extracted_email}` to our backend triage system. The Sovereign team will be in touch shortly.", parse_mode="Markdown")
 
         return
 
@@ -189,7 +285,7 @@ def handle_message(message):
 
 if __name__ == "__main__":
 
-    print("🟢 Suncoast V5 Closer Bot is ONLINE and listening...")
+    print("🟢 Suncoast V5 Commander & Closer Bot is ONLINE and listening...")
 
-    bot.infinity_polling()
+    bot.infinity_polling(timeout=60)
 

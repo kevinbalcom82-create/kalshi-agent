@@ -52,9 +52,16 @@ def execute_polymarket_order(token_id: str, side: str, price: Decimal, contracts
     
     for attempt in range(max_retries + 1):
         try:
-            order_args = OrderArgs(token_id=token_id, price=float(price), size=float(contracts), side=side.upper(), order_type=clob_order_type)
+            # Use the correct keyword for the OrderArgs implementation
+            order_args = OrderArgs(token_id=token_id, price=float(price), size=float(contracts), side=side.upper(), type=clob_order_type) # type: ignore
             signed_order = client.create_and_post_order(order_args)
-            return {"success": True, "order_id": signed_order.get("orderID", "UNKNOWN"), "status": signed_order.get("status", "submitted"), "error": None}
+            if isinstance(signed_order, dict):
+                order_id = signed_order.get("orderID", "UNKNOWN")
+                status = signed_order.get("status", "submitted")
+            else:
+                order_id = signed_order or "UNKNOWN"
+                status = "submitted"
+            return {"success": True, "order_id": order_id, "status": status, "error": None}
         except Exception as e:
             if "nonce" in str(e).lower() and attempt < max_retries: time.sleep(1); continue
             if "timeout" in str(e).lower() and attempt < max_retries: time.sleep(2); continue

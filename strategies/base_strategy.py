@@ -121,7 +121,9 @@ class BaseStrategy(ABC):
                 else:
                     result = execute_trade(kelly, exact_ticker)
                     invalidate_cache(self.ticker_prefix)
-                    logger.log_event("INFO", "ORDER_SENT", self.name, f"order_id={result.get('order_id')} status={result.get('status')}")
+                    order_id = result.get('order_id') if result and isinstance(result, dict) else None
+                    status = result.get('status') if result and isinstance(result, dict) else None
+                    logger.log_event("INFO", "ORDER_SENT", self.name, f"order_id={order_id} status={status}")
                     send_telegram(f"✅ *{self.name} STRIKE*\nSide: {kelly['side']}\nContracts: {kelly['contracts']}\nEntry: ${fresh_price}")
             except Exception as e:
                 release_fn(position)

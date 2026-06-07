@@ -31,13 +31,12 @@ class DailyEquitiesHunter(BaseStrategy):
         if today.weekday() >= 5:
             return False
             
-        # Suppress on FOMC days — Fed moves markets violently
         try:
             from data.fed_client import fed_client
             if fed_client.get_fed_context().get("is_fomc_today"):
                 return False
         except Exception:
-            pass  # If fed_client fails, run equities anyway
+            pass 
             
         return True
 
@@ -51,7 +50,6 @@ class DailyEquitiesHunter(BaseStrategy):
         vix        = market_ctx.get("vix", {})
         news_data  = rss_client.get_sentiment("CPI")
 
-        # VIX regime
         try:
             vix_price = Decimal(str(vix.get("price", "20")))
             if vix_price > Decimal("30"):
@@ -65,7 +63,6 @@ class DailyEquitiesHunter(BaseStrategy):
         except Exception:
             vix_regime = "UNKNOWN"
 
-        # SPX trend
         try:
             pct = Decimal(str(spx.get("pct_change", "0")))
             spx_trend = (
@@ -77,16 +74,16 @@ class DailyEquitiesHunter(BaseStrategy):
         except Exception:
             spx_trend = "UNKNOWN"
 
+        # --- THE RUTHLESS QUANT PROMPT UPGRADE ---
         prompt_sections = [
-            "You are a quantitative prediction market analyst "
-            "specializing in intraday US equity markets.\n"
-            "Analyze whether the S&P 500 will close UP or DOWN "
+            "You are the execution brain of a sovereign quantitative trading fund. "
+            "Your mandate is ABSOLUTE CAPITAL PRESERVATION. You do not gamble. You do not guess.\n"
+            "Analyze whether the S&P 500 will close UP (BUY_YES) or DOWN (BUY_NO) "
             "from its current price before the 4:00 PM ET close.\n\n"
-            "CONFIDENCE CALIBRATION:\n"
-            "  90-100: Extreme VIX + strong trend alignment\n"
-            "  75-89:  Clear directional signal\n"
-            "  65-74:  Some uncertainty\n"
-            "  Below 65: No edge — output WATCH",
+            "CONFIDENCE CALIBRATION (STRICT):\n"
+            "  90-100: Asymmetric edge. Perfect alignment of VIX regime and SPX momentum.\n"
+            "  85-89: Strong statistical probability. Clear trend.\n"
+            "  Below 85: NO EDGE. You MUST output 'WATCH'. Do not force a trade in chop.",
 
             f"## S&P 500 INTRADAY DATA\n"
             f"Current Price: {spx.get('price')}\n"
@@ -117,12 +114,13 @@ class DailyEquitiesHunter(BaseStrategy):
             '  "confidence": integer 0-100,\n'
             '  "suggested_entry_dollars": "0.XX",\n'
             '  "risk_flag": "LOW" or "MEDIUM" or "HIGH",\n'
-            '  "edge_source": "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM",\n'
-            '  "reasoning": "2-3 sentences citing specific values"\n'
+            '  "edge_source": "VIX" or "TREND" or "SENTIMENT" or "MOMENTUM" or "NONE",\n'
+            '  "reasoning": "2-3 sentences. If WATCH, explain why the edge is insufficient."\n'
             "}\n"
-            "ENTRY PRICE must be a quoted string between 0.01 and 0.99.\n"
-            "HIGH VIX (>25) = HIGH risk_flag always.\n"
-            "Never output entry above 0.85."
+            "RULES:\n"
+            "1. If confidence < 85, signal MUST be WATCH.\n"
+            "2. If VIX is EXTREME_FEAR, risk_flag MUST be HIGH.\n"
+            "3. ENTRY PRICE must be a string like '0.55'. Never exceed '0.85'."
         )
 
         return {

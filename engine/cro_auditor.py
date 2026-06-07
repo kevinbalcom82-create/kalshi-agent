@@ -1,9 +1,10 @@
 from decimal import Decimal
+from typing import Optional
 
 def get_macro_context():
     return {}
 
-def audit_signal(raw_signal: dict, context: dict = None) -> dict:
+def audit_signal(raw_signal: dict, context: Optional[dict] = None) -> dict:
     if context is None:
         context = get_macro_context()
 

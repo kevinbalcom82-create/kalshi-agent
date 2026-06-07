@@ -11,6 +11,7 @@ import base64
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric import rsa as asym_rsa
 from config import cfg
 from output.agent_logger import logger
 
@@ -31,6 +32,9 @@ class KalshiAuth:
                     key_file.read(),
                     password=None,
                 )
+            # Ensure loaded key is an RSA private key (has .sign)
+            if not isinstance(self.private_key, asym_rsa.RSAPrivateKey):
+                raise TypeError("Loaded key is not an RSA private key")
             self.is_loaded = True
             print("✅ Kalshi RSA Key loaded into Secure Enclave.")
         except Exception as e:
@@ -43,6 +47,10 @@ class KalshiAuth:
             raise ValueError("RSA key not loaded.")
             
         msg_string = timestamp_str + method + path
+        # mypy/linters may complain if private_key could be non-RSA; guard with isinstance
+        if not isinstance(self.private_key, asym_rsa.RSAPrivateKey):
+            raise TypeError("Private key does not support signing")
+
         signature = self.private_key.sign(
             msg_string.encode('utf-8'),
             padding.PKCS1v15(),

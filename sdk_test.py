@@ -1,11 +1,12 @@
-from kalshi_python_sync import ApiClient, Configuration
+from kalshi_python_sync.api_client import ApiClient
+from kalshi_python_sync.configuration import Configuration
 from kalshi_python_sync.api import exchange_api
 from config import cfg
 
 # Setup official config
 configuration = Configuration()
-configuration.key_id = cfg.KALSHI_KEY_ID
-configuration.private_key_path = cfg.KALSHI_PRIVATE_KEY_PATH
+configuration.key_id = getattr(cfg, "KALSHI_KEY_ID", None)
+configuration.private_key_path = getattr(cfg, "KALSHI_PRIVATE_KEY_PATH", None)
 
 # Initialize the client
 api_client = ApiClient(configuration)

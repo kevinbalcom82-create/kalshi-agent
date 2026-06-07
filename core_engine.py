@@ -62,8 +62,9 @@ def release_capital(amount: Decimal):
 
 def _shutdown(sig, frame):
     logger.log_event("INFO", "SHUTDOWN", "SYSTEM", f"Signal {sig} received. Commencing teardown.")
-    if hasattr(logger, 'close'):
-        logger.close()
+    close_fn = getattr(logger, "close", None)
+    if callable(close_fn):
+        close_fn()
     sys.exit(0)
 
 os_signal.signal(os_signal.SIGTERM, _shutdown)

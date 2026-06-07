@@ -1,6 +1,6 @@
 import os
 from decimal import Decimal
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,7 +12,7 @@ class AgentConfig(BaseSettings):
     """
 
     # ── Trading Execution ─────────────────────────────────────────────────────
-    KALSHI_API_KEY:           str
+    KALSHI_API_KEY:           str | None   = None
     KALSHI_PRIVATE_KEY_PATH:  str          = Field(default="./secrets/kalshi.pem")
     POLYMARKET_PRIVATE_KEY:   str | None   = None
     POLYMARKET_PROXY_WALLET:  str | None   = None
@@ -25,8 +25,8 @@ class AgentConfig(BaseSettings):
     ODDS_API_KEY:             str | None   = None
 
     # ── Alerts & Monitoring ───────────────────────────────────────────────────
-    TELEGRAM_BOT_TOKEN:       str
-    TELEGRAM_CHAT_ID:         str
+    TELEGRAM_BOT_TOKEN:       str | None   = None
+    TELEGRAM_CHAT_ID:         str | None   = None
 
     # ── Infrastructure ────────────────────────────────────────────────────────
     REST_BASE_URL:            str          = Field(default="https://external-api.kalshi.com")
@@ -51,7 +51,7 @@ class AgentConfig(BaseSettings):
 
     # ── Backward compatibility aliases ────────────────────────────────────────
     @property
-    def TELEGRAM_TOKEN(self) -> str:
+    def TELEGRAM_TOKEN(self) -> str | None:
         """Alias — some files use TELEGRAM_TOKEN, others TELEGRAM_BOT_TOKEN."""
         return self.TELEGRAM_BOT_TOKEN
 

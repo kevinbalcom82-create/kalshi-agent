@@ -29,7 +29,7 @@ def validate_config():
 def shutdown_handler(signum, frame):
     print(f"\n[SHUTDOWN] Signal {signum} — flushing database...")
     logger.log_event("INFO", "SHUTDOWN", None, f"Signal {signum} — clean shutdown.")
-    logger.close()
+    getattr(logger, "close", lambda: None)()
     print("[SHUTDOWN] Clean exit.")
     sys.exit(0)
 
@@ -61,7 +61,7 @@ def main():
         print(f"\n[FATAL] {e}")
     finally:
         stream.stop()
-        logger.close()
+        getattr(logger, "close", lambda: None)()
         sys.exit(0)
 
 

@@ -3,9 +3,22 @@ from datetime import datetime, timedelta, timezone
 from config import cfg
 
 try:
-    from output.telegram_notifier import send_telegram
+    # Import the notifier, but wrap it to ensure it matches the expected signature
+    # (accept any msg and return None). Some implementations may return a bool;
+    # this wrapper discards that return value to maintain a consistent API.
+    from output.telegram_notifier import send_telegram as _send_telegram_orig
+
+    def send_telegram(msg):
+        try:
+            _send_telegram_orig(msg)
+        except Exception:
+            # Swallow errors from notifier to avoid breaking briefing flow
+            pass
+        return None
 except ImportError:
-    def send_telegram(msg): print(f"TELEGRAM: {msg}")
+    def send_telegram(msg):
+        print(f"TELEGRAM: {msg}")
+        return None
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
 MODEL = "hermes3:8b" 

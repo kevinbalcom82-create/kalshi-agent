@@ -1,4 +1,5 @@
 import os, json, re, requests
+from typing import Any, Optional, Dict
 from dotenv import load_dotenv
 from config import cfg
 from output.agent_logger import logger
@@ -11,9 +12,13 @@ try:
     MEMORY_AVAILABLE = True
 except ImportError:
     MEMORY_AVAILABLE = False
-    def recall_memory(*a, **kw): return []
-    def format_memories_for_prompt(*a): return ""
-    def save_memory(*a, **kw): pass
+    def recall_memory(*a: Any, **kw: Any) -> list:
+        return []
+    # provide a fallback signature compatible with the real function
+    def format_memories_for_prompt(memories: Any, *a: Any, **kw: Any) -> str:
+        return ""
+    def save_memory(*a: Any, **kw: Any) -> None:
+        return None
 
 try:
     from engine.web_tools import search_breaking_news
@@ -21,7 +26,7 @@ try:
 except ImportError:
     WEB_AVAILABLE = False
 
-def generate_signal(context: dict = None):
+def generate_signal(context: Optional[Dict[str, Any]] = None):
     context = context or {}
     ticker = context.get("ticker", "UNKNOWN")
     strategy_name = context.get("strategy_name", "UNKNOWN")

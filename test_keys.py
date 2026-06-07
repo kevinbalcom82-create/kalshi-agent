@@ -13,14 +13,24 @@ try:
     from py_clob_client.client import ClobClient
     from py_clob_client.clob_types import ApiCreds
 
+    api_key = os.getenv("POLYMARKET_API_KEY")
+    api_secret = os.getenv("POLYMARKET_SECRET")
+    api_passphrase = os.getenv("POLYMARKET_PASSPHRASE")
+    wallet_key = os.getenv("WEB3_WALLET_PRIVATE_KEY")
+
+    if not api_key or not api_secret or not api_passphrase:
+        raise ValueError("Missing Polymarket API credentials")
+    if not wallet_key:
+        raise ValueError("Missing Web3 wallet private key")
+
     creds = ApiCreds(
-        api_key=os.getenv("POLYMARKET_API_KEY"),
-        api_secret=os.getenv("POLYMARKET_SECRET"),
-        api_passphrase=os.getenv("POLYMARKET_PASSPHRASE")
+        api_key=api_key,
+        api_secret=api_secret,
+        api_passphrase=api_passphrase
     )
     client = ClobClient(
         "https://clob.polymarket.com",
-        key=os.getenv("WEB3_WALLET_PRIVATE_KEY"),
+        key=wallet_key,
         chain_id=137,
         creds=creds
     )

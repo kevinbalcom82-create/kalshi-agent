@@ -128,18 +128,25 @@ class FedClient:
                 found_item = None
                 
                 for item in root.findall(".//item"):
-                    title = item.find("title").text or ""
-                    desc = item.find("description").text or ""
+                    title_element = item.find("title")
+                    desc_element = item.find("description")
+                    title = title_element.text if title_element is not None and title_element.text else ""
+                    desc = desc_element.text if desc_element is not None and desc_element.text else ""
                     if "Federal Open Market Committee" in title or "FOMC" in title or "Federal Open Market Committee" in desc:
                         found_item = item
                         break
                 
                 if found_item is not None:
-                    context["press_release_title"] = found_item.find("title").text
-                    context["press_release_url"] = found_item.find("link").text
-                    context["press_release_date"] = found_item.find("pubDate").text
+                    title_element = found_item.find("title")
+                    link_element = found_item.find("link")
+                    date_element = found_item.find("pubDate")
+                    desc_element = found_item.find("description")
                     
-                    text_to_score = f"{context['press_release_title']} {found_item.find('description').text or ''}".lower()
+                    context["press_release_title"] = title_element.text if title_element is not None and title_element.text else "Unavailable"
+                    context["press_release_url"] = link_element.text if link_element is not None and link_element.text else "Unavailable"
+                    context["press_release_date"] = date_element.text if date_element is not None and date_element.text else "Unavailable"
+                    
+                    text_to_score = f"{context['press_release_title']} {desc_element.text if desc_element is not None and desc_element.text else ''}".lower()
                     score = 0
                     
                     for hw in self.HAWKISH_PHRASES:
